@@ -1,0 +1,137 @@
+﻿<Window x:Class="WpfEditor1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfEditor1"
+        mc:Ignorable="d"
+        Title="Das Neue Autokad" Height="791.62" Width="1331.737">
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="UP"
+                Command="{Binding UP_Handler}" />
+    </Window.InputBindings>
+
+    <Grid Margin="0,0,3.6,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Viewport3D x:Name="MainViewPort" Height="754" VerticalAlignment="Top" HorizontalAlignment="Left" Width="849">
+
+            <Viewport3D.Camera>
+                <PerspectiveCamera x:Name="MainCamera" Position="0,0,10" LookDirection="0,0,-2" />
+            </Viewport3D.Camera>
+
+            <Viewport3D.Children>
+
+                <!--LIGHT-->
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <DirectionalLight Color="White" Direction="-1,-1,-2" />
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+
+            </Viewport3D.Children>
+        </Viewport3D>
+
+
+
+        <!--INPUT GROUP 1-->
+        <TextBox x:Name="C1XInput" HorizontalAlignment="Left" Height="23" Margin="859,59,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="C1YInput" HorizontalAlignment="Left" Height="23" Margin="924,59,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="C1ZInput" HorizontalAlignment="Left" Height="23" Margin="980,59,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <Button x:Name="button" Content="Transponieren" HorizontalAlignment="Left" Margin="1036,60,0,0" VerticalAlignment="Top" Width="92" Click="button_Click" Height="50"/>
+        <TextBox x:Name="C2XInput" HorizontalAlignment="Left" Height="23" Margin="859,87,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="C2YInput" HorizontalAlignment="Left" Height="23" Margin="924,87,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="C2ZInput" HorizontalAlignment="Left" Height="23" Margin="980,87,0,0" TextWrapping="Wrap" Text="-2" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+
+
+
+
+        <!--C1 Controls for Main Camera position-->
+        <Button x:Name="C1LeftButton" Content="Links" HorizontalAlignment="Left" Margin="854,201,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1LeftButton_Click"/>
+        <Button x:Name="C1UpButton" Content="Auf" HorizontalAlignment="Left" Margin="909,159,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1UpButton_Click"/>
+        <Button x:Name="C1DownButton" Content="Unten" HorizontalAlignment="Left" Margin="909,201,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1DownButton_Click"/>
+        <Button x:Name="C1RightButton" Content="Rechts" HorizontalAlignment="Left" Margin="966,201,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1RightButton_Click"/>
+        <Button x:Name="C1MZButton" Content="Vorwärts" HorizontalAlignment="Left" Margin="854,159,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1MZButton_Click"/>
+        <Button x:Name="C1LZButton" Content="Zurück" HorizontalAlignment="Left" Margin="966,159,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1LZButton_Click"/>
+
+
+
+        <!--C2 Controls for Main Camera LookDirection-->
+        <Button x:Name="C2LeftButton" Content="Links" HorizontalAlignment="Left" Margin="1036,194,0,0" VerticalAlignment="Top" Width="50" Height="29" Click="C2LeftButton_Click"/>
+        <Button x:Name="C2UpButton" Content="Auf" HorizontalAlignment="Left" Margin="1095,157,0,0" VerticalAlignment="Top" Width="50" Height="29" Click="C2UpButton_Click"/>
+        <Button x:Name="C2DownButton" Content="Unten" HorizontalAlignment="Left" Margin="1095,194,0,0" VerticalAlignment="Top" Width="50" Height="29" Click="C2DownButton_Click"/>
+        <Button x:Name="C2RightButton" Content="Rechts" HorizontalAlignment="Left" Margin="1154,194,0,0" VerticalAlignment="Top" Width="50" Height="29" Click="C2RightButton_Click"/>
+        <Button x:Name="C2MZButton" Content="Vorwärts" HorizontalAlignment="Left" Margin="1036,157,0,0" VerticalAlignment="Top" Width="50" Height="29" Click="C2MZButton_Click"/>
+        <Button x:Name="C2LZButton" Content="Zurück" HorizontalAlignment="Left" Margin="1154,157,0,0" VerticalAlignment="Top" Width="50" Height="29" Click="C2LZButton_Click"/>
+
+
+
+        <TextBox x:Name="C12SpeedInput" HorizontalAlignment="Left" Height="21" Margin="1218,60,0,0" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Top" Width="34" RenderTransformOrigin="-0.038,0.418" TextChanged="C12SpeedInput_TextChanged"/>
+        <Slider x:Name="C12SpeedSlider" HorizontalAlignment="Left" Margin="1161,154,0,0" VerticalAlignment="Top" Width="151" RenderTransformOrigin="0.5,0.5" LargeChange="0" ValueChanged="C12SpeedSlider_ValueChanged" Minimum="0.05" SmallChange="0.05" TickFrequency="2">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+        <TextBox x:Name="NTX1Input" HorizontalAlignment="Left" Height="23" Margin="928,370,0,0" TextWrapping="Wrap" Text="-2" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="NTY1Input" HorizontalAlignment="Left" Height="23" Margin="994,370,0,0" TextWrapping="Wrap" Text="-1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NTZ1Input" HorizontalAlignment="Left" Height="23" Margin="1050,370,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NTX2Input" HorizontalAlignment="Left" Height="23" Margin="929,398,0,0" TextWrapping="Wrap" Text="-1" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="NTY2Input" HorizontalAlignment="Left" Height="23" Margin="994,398,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NTZ2Input" HorizontalAlignment="Left" Height="23" Margin="1050,398,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NTX3Input" HorizontalAlignment="Left" Height="23" Margin="929,426,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="NTY3Input" HorizontalAlignment="Left" Height="23" Margin="994,426,0,0" TextWrapping="Wrap" Text="-1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NTZ3Input" HorizontalAlignment="Left" Height="23" Margin="1050,426,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <Label x:Name="Label" Content="Neue Dreieck" HorizontalAlignment="Left" Margin="970,339,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="AddTriangleButton" Content="Drauflegen" HorizontalAlignment="Left" Margin="1106,426,0,0" VerticalAlignment="Top" Width="68" Height="25" Click="AddTriangleButton_Click"/>
+        <TextBox x:Name="NTColorInput" HorizontalAlignment="Left" Height="23" Margin="1106,398,0,0" TextWrapping="Wrap" Text="Yellow" VerticalAlignment="Top" Width="68"/>
+        <TextBox x:Name="NCircleXInput" HorizontalAlignment="Left" Height="23" Margin="923,508,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="NCircleYInput" HorizontalAlignment="Left" Height="23" Margin="988,508,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NCircleZInput" HorizontalAlignment="Left" Height="23" Margin="1044,508,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NCircleXNormInput" HorizontalAlignment="Left" Height="23" Margin="923,536,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418"/>
+        <TextBox x:Name="NCircleYNormInput" HorizontalAlignment="Left" Height="23" Margin="988,536,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NCircleZNormInput" HorizontalAlignment="Left" Height="23" Margin="1044,536,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <Label x:Name="label" Content="Zentrum" HorizontalAlignment="Left" Margin="867,508,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy" Content="Normal" HorizontalAlignment="Left" Margin="864,534,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NCircleRadInput" HorizontalAlignment="Left" Height="23" Margin="923,564,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.038,0.418" />
+        <TextBox x:Name="NCircleResInput" HorizontalAlignment="Left" Height="23" Margin="1044,564,0,0" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-1.318,-0.294"/>
+        <TextBox x:Name="NCircleColInput" HorizontalAlignment="Left" Height="23" Margin="1106,536,0,0" TextWrapping="Wrap" Text="Black" VerticalAlignment="Top" Width="68" RenderTransformOrigin="-1.318,-0.294"/>
+        <Label x:Name="label1" Content="Halbmesser" HorizontalAlignment="Left" Margin="923,592,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="Bildauflösung" HorizontalAlignment="Left" Margin="1019,592,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label x:Name="label3" Content="Farbe" HorizontalAlignment="Left" Margin="1179,536,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="NCircleAddButton" Content="Drauflegen" HorizontalAlignment="Left" Margin="1101,564,0,0" VerticalAlignment="Top" Width="73" Height="23" Click="NCircleAddButton_Click"/>
+        <Label x:Name="Label_Copy" Content="" HorizontalAlignment="Left" Margin="779,350,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Label_Copy1" Content="Neuer Kreis" HorizontalAlignment="Left" Margin="975,477,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label4" Content="Punkt Eins" HorizontalAlignment="Left" Margin="859,370,0,0" VerticalAlignment="Top" Width="64" Height="23"/>
+        <Label x:Name="label4_Copy" Content="Punkt Zwei" HorizontalAlignment="Left" Margin="854,398,0,0" VerticalAlignment="Top" Width="69" Height="23"/>
+        <Label x:Name="label4_Copy1" Content="Punkt Drei" HorizontalAlignment="Left" Margin="859,428,0,0" VerticalAlignment="Top" Width="64" Height="23"/>
+        <Label x:Name="label3_Copy" Content="Farbe" HorizontalAlignment="Left" Margin="1179,398,0,0" VerticalAlignment="Top"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </Grid>
+</Window>

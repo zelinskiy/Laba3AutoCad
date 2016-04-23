@@ -1,0 +1,14 @@
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\bin\Debug\WpfEditor1.exe.config
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\bin\Debug\WpfEditor1.exe
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\bin\Debug\WpfEditor1.pdb
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.csprojResolveAssemblyReference.cache
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\MainWindow.g.cs
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\App.g.cs
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1_MarkupCompile.cache
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1_MarkupCompile.lref
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\MainWindow.baml
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.g.resources
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.Properties.Resources.resources
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.csproj.GenerateResource.Cache
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.exe
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.pdb
