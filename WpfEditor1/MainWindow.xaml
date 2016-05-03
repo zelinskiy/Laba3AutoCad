@@ -115,6 +115,9 @@
         <TextBox x:Name="EllipseATextBox" HorizontalAlignment="Left" Height="24" Margin="895,520,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="35"/>
         <Label x:Name="label_Copy5" Content="A" HorizontalAlignment="Left" Margin="872,520,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy6" Content="B" HorizontalAlignment="Left" Margin="872,546,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="FiguresListBox" HorizontalAlignment="Left" Height="253" Margin="1126,31,0,0" VerticalAlignment="Top" Width="169"/>
+        <Button x:Name="DeleteFigureButton" Content="Delete" HorizontalAlignment="Left" Margin="1220,289,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="EditFigureButton" Content="Edit" HorizontalAlignment="Left" Margin="1126,289,0,0" VerticalAlignment="Top" Width="75"/>
 
 
 

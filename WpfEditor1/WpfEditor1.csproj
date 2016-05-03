@@ -69,6 +69,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Circle.cs" />
+    <Compile Include="Models\Cone.cs" />
+    <Compile Include="Models\CuttedCone.cs" />
+    <Compile Include="Models\Ellipse.cs" />
+    <Compile Include="Models\EmptyCircle.cs" />
+    <Compile Include="Models\Figure.cs" />
+    <Compile Include="Models\MyImage.cs" />
+    <Compile Include="Models\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Media3D;
+using WpfEditor1.Models;
 
 
 
@@ -35,254 +36,14 @@ namespace WpfEditor1
 
         public double C12Speed = 0.1;
 
-
-        #region Utility figures
-
-        public void DrawTriangle(Point3D p1, Point3D p2, Point3D p3, string color)
-        {
-                /* Usage:
-                    p2
-                   /  \ 
-                  /    \
-                 /      \
-                /        \
-               p1--------p3
-
-        */
-            ModelVisual3D m = new ModelVisual3D();
-
-            MeshGeometry3D mg = new MeshGeometry3D();
-            mg.Positions = new Point3DCollection(new List<Point3D>() { p1, p2, p3 });
-            mg.TriangleIndices = new Int32Collection(new List<int>() { 0, 2, 1 });
-            BrushConverter bc = new BrushConverter();
-            Brush b = (Brush)bc.ConvertFromString(color);
-            Material mat = new DiffuseMaterial(b);
-            m.Content = new GeometryModel3D(mg, mat);
-
-
-            MainViewPort.Children.Add(m);
-        }
-
-        public void drawRect(Point3D a, Point3D b, Point3D c, Point3D d, Color color)
-        {
-
-            DrawTriangle(a, b, c, color.ToString());
-            DrawTriangle(a, c, d, color.ToString());
-
-            DrawTriangle(a, c, b, color.ToString());
-            DrawTriangle(a, d, c, color.ToString());
-        }
-        
-        public void drawPseudoLine(Point3D a, Point3D b, double w, Color color)
-        {
-            if (b.X < a.X)
-            {
-                Point3D t = a;
-                a = b;
-                b = t;
-            }
-
-
-            drawRect(
-                new Point3D(a.X + w, a.Y - w, a.Z),
-                new Point3D(a.X + w, a.Y + w, a.Z),
-                new Point3D(b.X + w, b.Y + w, b.Z),
-                new Point3D(b.X + w, b.Y - w, b.Z),
-                color);
-
-
-            drawRect(
-                new Point3D(a.X - w, a.Y - w, a.Z),
-                new Point3D(a.X + w, a.Y + w, a.Z),
-                new Point3D(b.X + w, b.Y + w, b.Z),
-                new Point3D(b.X - w, b.Y - w, b.Z),
-                color);
-
-        }
-
-        #endregion
-
-
-
-
-
-
-        #region Main figures
-        /////////////////////////////////////////////
-
-        public void drawCircle(Point3D center, double R, int resolution, Color color)
-        {
-            //drawing
-            double t = 2 * Math.PI / resolution;
-            for (int i = 0; i < resolution; i++)
-            {
-                DrawTriangle(                    
-                    new Point3D(center.X + R * Math.Cos(t * i), center.Y - R * Math.Sin(t * i), center.Z),
-                    new Point3D(center.X + R * Math.Cos(t * (i+1)), center.Y - R * Math.Sin(t * (i+1)),center.Z),
-                    center,
-                    color.ToString()
-                );
-            }
-            
-        }
-        
-        ////////////////////////////////////////////
-
-        public void drawCone(Point3D center, double R,double H, int resolution, Color color)
-        {
-            //drawing Side
-            double t = 2 * Math.PI / resolution;
-            for (int i = 0; i < resolution - 1; i++)
-            {
-                DrawTriangle(
-                    new Point3D(center.X + R * Math.Cos(t * i),center.Y,  center.Z - R * Math.Sin(t * i)),
-                    new Point3D(center.X, center.Y + H, center.Z),
-                    new Point3D(center.X + R * Math.Cos(t * (i + 1)),center.Y,  center.Z - R * Math.Sin(t * (i + 1))),
-                    color.ToString()
-                );
-            }
-            //Final segment of Side
-            DrawTriangle(
-                    new Point3D(center.X + R * Math.Cos(t * (resolution-1)), center.Y, center.Z - R * Math.Sin(t * (resolution - 1))),
-                    new Point3D(center.X, center.Y + H, center.Z),
-                    new Point3D(center.X + R * Math.Cos(t * resolution), center.Y, center.Z - R * Math.Sin(t * resolution)),
-                    color.ToString()
-                );
-
-            //drawing Base
-            for (int i = 0; i < resolution - 1; i++)
-            {
-                DrawTriangle(
-                    new Point3D(center.X + R * Math.Cos(t * i),center.Y,  center.Z - R * Math.Sin(t * i)),                    
-                    new Point3D(center.X + R * Math.Cos(t * (i + 1)),center.Y, center.Z - R * Math.Sin(t * (i + 1))),
-                    center,
-                    color.ToString()
-                );
-            }
-            //Final segment
-            DrawTriangle(
-                    new Point3D(center.X + R * Math.Cos(t * (resolution-1)), center.Y, center.Z - R * Math.Sin(t * (resolution - 1))),
-                    new Point3D(center.X + R * Math.Cos(t * resolution), center.Y, center.Z - R * Math.Sin(t * resolution)),
-                    center,
-                    color.ToString()
-                );
-        }
-
-        ////////////////////////////////////////
-
-        public void drawCuttedCone(Point3D center, double R,double r, double H, int resolution, Color color)
-        {
-            double t = 2 * Math.PI / resolution;
-            
-            //drawing Side
-            for (int i = 0; i < resolution; i++)
-            {
-                DrawTriangle(
-                    new Point3D(center.X + R * Math.Cos(t * i), center.Y, center.Z - R * Math.Sin(t * i)),
-                    new Point3D(center.X + r * Math.Cos(t * i), center.Y + H, center.Z - r * Math.Sin(t * i)),
-                    new Point3D(center.X + R * Math.Cos(t * (i + 1)), center.Y, center.Z - R * Math.Sin(t * (i + 1))),
-                    color.ToString()
-                );
-                DrawTriangle(
-                    new Point3D(center.X + r * Math.Cos(t * (i + 1)), center.Y + H, center.Z - r * Math.Sin(t * (i + 1))),
-                    new Point3D(center.X + R * Math.Cos(t * (i + 1)), center.Y, center.Z - R * Math.Sin(t * (i + 1))),                    
-                    new Point3D(center.X + r * Math.Cos(t * i), center.Y + H, center.Z - r * Math.Sin(t * i)),
-                    
-                    color.ToString()
-                );
-            }
-            
-
-
-
-
-
-
-
-
-
-
-
-
-            for (int i = 0; i < resolution; i++)
-            {
-                DrawTriangle(
-                    new Point3D(center.X + r * Math.Cos(t * i), center.Y + H, center.Z - r * Math.Sin(t * i)),
-                    new Point3D(center.X, center.Y + H, center.Z),
-                    new Point3D(center.X + r * Math.Cos(t * (i + 1)), center.Y + H, center.Z - r * Math.Sin(t * (i + 1))),
-                    
-                    color.ToString()
-                );
-            }
-
-
-
-            //drawing Base
-            for (int i = 0; i < resolution; i++)
-            {
-                DrawTriangle(
-                    new Point3D(center.X + R * Math.Cos(t * i), center.Y, center.Z - R * Math.Sin(t * i)),
-                    new Point3D(center.X + R * Math.Cos(t * (i + 1)), center.Y, center.Z - R * Math.Sin(t * (i + 1))),
-                    center,
-                    color.ToString()
-                );
-            }
-            
-        }
-
-        /////////////////////////////////////////////  
-
-        public void drawEmptyCircle(Point3D center, double R, int resolution,double width, Color color)
-        {
-            double r = R + width;
-            //drawing
-            double t = 2 * Math.PI / resolution;
-            for (int i = 0; i < resolution ; i++)
-            {
-                drawRect(
-                    new Point3D(center.X + R * Math.Cos(t * i), center.Y - R * Math.Sin(t * i), center.Z),
-                    new Point3D(center.X + r * Math.Cos(t * i), center.Y - r * Math.Sin(t * i), center.Z),
-                    new Point3D(center.X + r * Math.Cos(t * (i - 1)), center.Y - r * Math.Sin(t * (i - 1)), center.Z),
-                    new Point3D(center.X + R * Math.Cos(t * (i-1)), center.Y - R * Math.Sin(t * (i - 1)), center.Z),
-                    color
-                    );
-            }
-
-        }
-        
-        /////////////////////////////////////////////
-
-        public void drawEllipse(Point3D center, double R,double a, double b, int resolution, Color color)
-        {
-            double t = 2 * Math.PI / resolution;
-            for (int i = 0; i < resolution; i++)
-            {
-                DrawTriangle(
-                    new Point3D(center.X + a * R * Math.Cos(t * i), center.Y - b * R * Math.Sin(t * i), center.Z),
-                    new Point3D(center.X + a * R * Math.Cos(t * (i + 1)), center.Y - b * R * Math.Sin(t * (i + 1)), center.Z),
-                    center,
-                    color.ToString()
-                );
-            }
-        }
-
-        /////////////////////////////////////////////
-        #endregion
-
-
-
-
-
+        public MyImage MyImage;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            drawPseudoLine(new Point3D(0, -100, 0), new Point3D(0, 100, 0), 0.01, Colors.Red);
-            drawPseudoLine(new Point3D(-100, 0, 0), new Point3D(100, 0, 0), 0.01, Colors.Red);
-            //drawCuttedCone(new Point3D(0, 0, 0), 0.5, 0.1, 2.0, 40, Colors.Aqua);
-            //drawEllipse(new Point3D(0, 0, 0), 2, 3, 1, 40, Colors.Purple);
-            
+            MyImage = new MyImage(MainViewPort);
+            MyImage.RedrawAll();            
         }
 
 
@@ -383,6 +144,18 @@ namespace WpfEditor1
 
         #endregion
 
+
+        public void RefreshFiguresView()
+        {
+            FiguresListBox.Items.Clear();
+            foreach(Models.Figure f in MyImage.Figures)
+            {
+                FiguresListBox.Items.Add(f);
+            }
+            
+        }
+
+
         private void AddFigureButton_Click(object sender, RoutedEventArgs e)
         {
             Point3D center;
@@ -424,21 +197,57 @@ namespace WpfEditor1
             switch (FiguresComboBox.SelectedIndex)
             {
                 case 0:
-                    drawCircle(center, R, resolution, color);
+                    MyImage.Add(new Circle() {
+                        Position = center,
+                        Radius = R,
+                        Resolution = resolution,
+                        Color = color
+                    });
                     break;
                 case 1:
-                    drawEmptyCircle(center, R, resolution,width, color);
+                    MyImage.Add(new EmptyCircle()
+                    {
+                        Position = center,
+                        Radius = R,
+                        Resolution = resolution,
+                        LineWidth = width,
+                        Color = color
+                    });
                     break;
                 case 2:
-                    drawEllipse(center, R, a, b, resolution, color);
+                    MyImage.Add(new Models.Ellipse()
+                    {
+                        Position = center,
+                        Radius = R,
+                        Resolution = resolution,
+                        A = a,
+                        B = b,
+                        Color = color
+                    });
                     break;
                 case 3:
-                    drawCone(center, R, H, resolution, color);
+                    MyImage.Add(new Cone()
+                    {
+                        Position = center,
+                        Radius = R,
+                        Height = H,
+                        Resolution = resolution,
+                        Color = color
+                    });
                     break;
                 case 4:
-                    drawCuttedCone(center, R, r, H, resolution, color);
+                    MyImage.Add(new CuttedCone()
+                    {
+                        Position = center,
+                        Radius = R,
+                        SmallRadius = r,
+                        Height = H,
+                        Resolution = resolution,
+                        Color = color
+                    });
                     break;
             }
+            RefreshFiguresView();
         }
     }
 
