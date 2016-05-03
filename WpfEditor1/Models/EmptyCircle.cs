@@ -16,7 +16,16 @@ namespace WpfEditor1.Models
         public override void Scale(double size) { }
 
 
-        
+
+        public override bool Hitted(Point p)
+        {
+            return 
+                Math.Sqrt(
+                Math.Pow(p.Position.X - Position.X, 2)+
+                Math.Pow(p.Position.Y - Position.Y, 2))
+                <= Radius;
+        }
+
 
         public override void Draw(MyImage image)
         {
@@ -35,14 +44,13 @@ namespace WpfEditor1.Models
         }
         public override double Area()
         {
-            return 0;
+            return Math.PI * Radius * Radius;
         }
         public override string ToString()
         {
             return
-                "Point of radius "
-                + Radius.ToString()
-                + " at "
+                Color.ToString()
+                + " EmptyCircle at "
                 + Position.ToString()
                 + ";";
         }

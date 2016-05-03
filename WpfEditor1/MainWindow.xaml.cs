@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Media3D;
 using WpfEditor1.Models;
+using System.Reflection;
 
 
 
@@ -33,17 +34,17 @@ namespace WpfEditor1
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Random rand = new Random();
 
         public double C12Speed = 0.1;
 
-        public MyImage MyImage;
+        public MyImage myImage;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            MyImage = new MyImage(MainViewPort);
-            MyImage.RedrawAll();            
+            myImage = new MyImage(MainViewPort);
         }
 
 
@@ -148,7 +149,7 @@ namespace WpfEditor1
         public void RefreshFiguresView()
         {
             FiguresListBox.Items.Clear();
-            foreach(Models.Figure f in MyImage.Figures)
+            foreach(Models.Figure f in myImage.Figures)
             {
                 FiguresListBox.Items.Add(f);
             }
@@ -181,7 +182,15 @@ namespace WpfEditor1
                 H = double.Parse(HeightTextBox.Text);
                 width = double.Parse(LineWidthTextBox.Text);
                 resolution = int.Parse(ResolutionTextBox.Text);
-                color = (Color)ColorsComboBox.SelectedItem;
+                if(ColorsComboBox.SelectedIndex == -1)
+                {
+                    color = (Color)ColorsComboBox.Items[rand.Next(ColorsComboBox.Items.Count-1)];
+                }
+                else
+                {
+                    color = (Color)ColorsComboBox.SelectedItem;
+                }
+                
 
                 a = double.Parse(EllipseATextBox.Text);
                 b = double.Parse(EllipseBTextBox.Text);
@@ -194,10 +203,12 @@ namespace WpfEditor1
             }
 
 
+
+
             switch (FiguresComboBox.SelectedIndex)
             {
                 case 0:
-                    MyImage.Add(new Circle() {
+                    myImage.Add(new Circle() {
                         Position = center,
                         Radius = R,
                         Resolution = resolution,
@@ -205,7 +216,7 @@ namespace WpfEditor1
                     });
                     break;
                 case 1:
-                    MyImage.Add(new EmptyCircle()
+                    myImage.Add(new EmptyCircle()
                     {
                         Position = center,
                         Radius = R,
@@ -215,7 +226,7 @@ namespace WpfEditor1
                     });
                     break;
                 case 2:
-                    MyImage.Add(new Models.Ellipse()
+                    myImage.Add(new Models.Ellipse()
                     {
                         Position = center,
                         Radius = R,
@@ -226,7 +237,7 @@ namespace WpfEditor1
                     });
                     break;
                 case 3:
-                    MyImage.Add(new Cone()
+                    myImage.Add(new Cone()
                     {
                         Position = center,
                         Radius = R,
@@ -236,7 +247,7 @@ namespace WpfEditor1
                     });
                     break;
                 case 4:
-                    MyImage.Add(new CuttedCone()
+                    myImage.Add(new CuttedCone()
                     {
                         Position = center,
                         Radius = R,
@@ -246,8 +257,100 @@ namespace WpfEditor1
                         Color = color
                     });
                     break;
+                case 5:
+                    myImage.Add(new Models.Point()
+                    {
+                        Position = center,
+                        Radius = R,
+                        Color = color
+                    });
+                    break;
             }
             RefreshFiguresView();
+        }
+
+        private void DeleteFigureButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(FiguresListBox.SelectedIndex == -1)
+            {
+                return;
+            }
+            myImage.Remove(((Models.Figure)FiguresListBox.SelectedItem).Id);
+            RefreshFiguresView();
+
+        }
+
+        
+
+
+        private void SaveFigureButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteFigureButton_Click(null, null);
+            AddFigureButton_Click(null, null);
+        }
+
+
+
+
+        private void LoadDataToForms(Models.Figure MyFigure)
+        {            
+            CenterXTextBox.Text = MyFigure.Position.X.ToString();
+            CenterYTextBox.Text = MyFigure.Position.Y.ToString();
+            CenterZTextBox.Text = MyFigure.Position.Z.ToString();
+
+            BigRadiusTextBox.Text = MyFigure.Radius.ToString();
+
+            if (MyFigure is CuttedCone)
+            {
+                SmallRadiusTextBox.Text = ((CuttedCone)MyFigure).SmallRadius.ToString();
+            }
+
+            if (MyFigure is Cone)
+            {
+                SmallRadiusTextBox.Text = ((CuttedCone)MyFigure).Height.ToString();
+            }
+
+            if (MyFigure is EmptyCircle)
+            {
+                ResolutionTextBox.Text = ((EmptyCircle)MyFigure).Resolution.ToString();
+            }
+
+            if (MyFigure is EmptyCircle)
+            {
+                LineWidthTextBox.Text = ((EmptyCircle)MyFigure).LineWidth.ToString();
+            }
+            ColorsComboBox.SelectedItem = MyFigure.Color;
+        }
+
+
+        private void FiguresListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Models.Figure MyFigure = (Models.Figure)FiguresListBox.SelectedItem;
+                LoadDataToForms(MyFigure);
+            }
+            catch(NullReferenceException nullex)
+            {
+            }
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            myImage.Remove(-9);
+            int n;
+            try
+            {
+                n = int.Parse(MonteCarlotNumTextBox.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Hello from monte carlo");
+                return;
+            }
+            double x = myImage.DropRandomPoints(n);
+            myImage.RedrawAll();
+            MessageBox.Show(x.ToString() + "%" );
         }
     }
 

@@ -28,12 +28,17 @@ namespace WpfEditor1.Models
                 );
             }
         }
+
+        public override bool Hitted(Point p)
+        {
+            return base.Hitted(p);
+        }
+
         public override string ToString()
         {
             return
-                "Circle of radius "
-                + Radius.ToString()
-                + " at "
+                Color.ToString()
+                + " Circle at "
                 + Position.ToString()
                 + ";";
         }

@@ -17,7 +17,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Viewport3D x:Name="MainViewPort" Height="754" VerticalAlignment="Top" HorizontalAlignment="Left" Width="849">
+        <Viewport3D x:Name="MainViewPort" HorizontalAlignment="Left" Width="849" Margin="0,0,0,10">
 
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="MainCamera" Position="0,0,10" LookDirection="0,0,-2" />
@@ -50,17 +50,17 @@
 
 
         <!--C1 Controls for Main Camera position-->
-        <Button x:Name="C1LeftButton" Content="X-" HorizontalAlignment="Left" Margin="868,170,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1LeftButton_Click"/>
-        <Button x:Name="C1UpButton" Content="Y+" HorizontalAlignment="Left" Margin="923,128,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1UpButton_Click"/>
-        <Button x:Name="C1DownButton" Content="Y-" HorizontalAlignment="Left" Margin="923,170,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1DownButton_Click"/>
-        <Button x:Name="C1RightButton" Content="X+" HorizontalAlignment="Left" Margin="980,170,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1RightButton_Click"/>
-        <Button x:Name="C1MZButton" Content="Z+" HorizontalAlignment="Left" Margin="868,128,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1MZButton_Click"/>
-        <Button x:Name="C1LZButton" Content="Z-" HorizontalAlignment="Left" Margin="980,128,0,0" VerticalAlignment="Top" Width="47" Height="33" Click="C1LZButton_Click"/>
+        <Button x:Name="C1LeftButton" Content="X-" HorizontalAlignment="Left" Margin="923,159,0,0" VerticalAlignment="Top" Width="31" Height="25" Click="C1LeftButton_Click"/>
+        <Button x:Name="C1UpButton" Content="Y+" HorizontalAlignment="Left" Margin="959,128,0,0" VerticalAlignment="Top" Width="30" Height="25" Click="C1UpButton_Click"/>
+        <Button x:Name="C1DownButton" Content="Y-" HorizontalAlignment="Left" Margin="959,159,0,0" VerticalAlignment="Top" Width="30" Height="25" Click="C1DownButton_Click"/>
+        <Button x:Name="C1RightButton" Content="X+" HorizontalAlignment="Left" Margin="996,159,0,0" VerticalAlignment="Top" Width="31" Height="25" Click="C1RightButton_Click"/>
+        <Button x:Name="C1MZButton" Content="Z+" HorizontalAlignment="Left" Margin="923,128,0,0" VerticalAlignment="Top" Width="31" Height="25" Click="C1MZButton_Click"/>
+        <Button x:Name="C1LZButton" Content="Z-" HorizontalAlignment="Left" Margin="996,128,0,0" VerticalAlignment="Top" Width="31" Height="25" Click="C1LZButton_Click"/>
 
 
 
         <!--C2 Controls for Main Camera LookDirection-->
-        <Slider x:Name="C12SpeedSlider" HorizontalAlignment="Left" Margin="955,189,0,0" VerticalAlignment="Top" Width="191" RenderTransformOrigin="0.5,0.5" LargeChange="0" Minimum="0.05" SmallChange="0.05" TickFrequency="2" ValueChanged="C12SpeedSlider_ValueChanged" Height="20">
+        <Slider x:Name="C12SpeedSlider" HorizontalAlignment="Left" Margin="1002,157,0,0" VerticalAlignment="Top" Width="113" RenderTransformOrigin="0.5,0.5" LargeChange="0" Minimum="0.05" SmallChange="0.05" TickFrequency="2" ValueChanged="C12SpeedSlider_ValueChanged" Height="20">
             <Slider.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1.15" ScaleX="0.869"/>
@@ -71,53 +71,63 @@
             </Slider.RenderTransform>
         </Slider>
         <Label x:Name="Label_Copy" Content="" HorizontalAlignment="Left" Margin="779,350,0,0" VerticalAlignment="Top"/>
-        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="868,262,0,0" VerticalAlignment="Top" Width="159" Minimum="-90" Maximum="90" ValueChanged="slider_ValueChanged"/>
-        <Slider x:Name="slider1" HorizontalAlignment="Left" Margin="824,114,0,0" VerticalAlignment="Top" Width="25" Height="170" Orientation="Vertical" Maximum="180" Value="90" ValueChanged="slider1_ValueChanged"/>
-        <Button x:Name="button1" Content="R" HorizontalAlignment="Left" Margin="830,90,0,0" VerticalAlignment="Top" Width="19" Click="button1_Click"/>
-        <TextBox x:Name="CenterXTextBox" HorizontalAlignment="Left" Height="23" Margin="873,376,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="CenterYTextBox" HorizontalAlignment="Left" Height="23" Margin="923,376,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="CenterZTextBox" HorizontalAlignment="Left" Height="23" Margin="970,376,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="BigRadiusTextBox" HorizontalAlignment="Left" Height="23" Margin="873,432,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="SmallRadiusTextBox" HorizontalAlignment="Left" Height="23" Margin="923,432,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="HeightTextBox" HorizontalAlignment="Left" Height="23" Margin="970,432,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="ResolutionTextBox" HorizontalAlignment="Left" Height="23" Margin="873,484,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="69"/>
-        <TextBox x:Name="LineWidthTextBox" HorizontalAlignment="Left" Height="23" Margin="947,484,0,0" TextWrapping="Wrap" Text="0,05" VerticalAlignment="Top" Width="65"/>
-        <Label x:Name="label" Content="Resolution" HorizontalAlignment="Left" Margin="873,460,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy" Content="Line width" HorizontalAlignment="Left" Margin="947,460,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy1" Content="R" HorizontalAlignment="Left" Margin="873,406,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy2" Content="r" HorizontalAlignment="Left" Margin="923,406,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy3" Content="H" HorizontalAlignment="Left" Margin="970,406,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy4" Content="Center" HorizontalAlignment="Left" Margin="923,350,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddFigureButton" Content="Add" HorizontalAlignment="Left" Margin="947,550,0,0" VerticalAlignment="Top" Width="64" Click="AddFigureButton_Click"/>
-        <ComboBox x:Name="ColorsComboBox" HorizontalAlignment="Left" Margin="1175,406,0,0" VerticalAlignment="Top" Width="120">
-            <Color>#FFFF0505</Color>
+        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="896,262,0,0" VerticalAlignment="Top" Width="187" Minimum="-90" Maximum="90" ValueChanged="slider_ValueChanged"/>
+        <Slider x:Name="slider1" HorizontalAlignment="Left" Margin="890,88,0,0" VerticalAlignment="Top" Width="25" Height="170" Orientation="Vertical" Maximum="180" Value="90" ValueChanged="slider1_ValueChanged"/>
+        <Button x:Name="button1" Content="R" HorizontalAlignment="Left" Margin="896,64,0,0" VerticalAlignment="Top" Width="19" Click="button1_Click"/>
+        <TextBox x:Name="CenterXTextBox" HorizontalAlignment="Left" Height="23" Margin="873,376,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="CenterYTextBox" HorizontalAlignment="Left" Height="23" Margin="916,376,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="CenterZTextBox" HorizontalAlignment="Left" Height="23" Margin="957,376,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="BigRadiusTextBox" HorizontalAlignment="Left" Height="23" Margin="873,432,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="SmallRadiusTextBox" HorizontalAlignment="Left" Height="23" Margin="916,432,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="HeightTextBox" HorizontalAlignment="Left" Height="23" Margin="957,432,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="36"/>
+        <TextBox x:Name="ResolutionTextBox" HorizontalAlignment="Left" Height="23" Margin="873,484,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="93"/>
+        <TextBox x:Name="LineWidthTextBox" HorizontalAlignment="Left" Height="23" Margin="973,484,0,0" TextWrapping="Wrap" Text="0,05" VerticalAlignment="Top" Width="87"/>
+        <Label x:Name="label" Content="Resolution" HorizontalAlignment="Left" Margin="873,460,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="label_Copy" Content="Line width" HorizontalAlignment="Left" Margin="973,460,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label x:Name="label_Copy1" Content="R" HorizontalAlignment="Left" Margin="873,406,0,0" VerticalAlignment="Top" Width="36"/>
+        <Label x:Name="label_Copy2" Content="r" HorizontalAlignment="Left" Margin="916,406,0,0" VerticalAlignment="Top" Width="36"/>
+        <Label x:Name="label_Copy3" Content="H" HorizontalAlignment="Left" Margin="957,406,0,0" VerticalAlignment="Top" Width="36"/>
+        <Label x:Name="label_Copy4" Content="Center" HorizontalAlignment="Left" Margin="900,350,0,0" VerticalAlignment="Top" Width="73"/>
+        <Button x:Name="AddFigureButton" Content="Add" HorizontalAlignment="Left" Margin="982,550,0,0" VerticalAlignment="Top" Width="92" Click="AddFigureButton_Click"/>
+        <ComboBox x:Name="ColorsComboBox" HorizontalAlignment="Left" Margin="997,376,0,0" VerticalAlignment="Top" Width="79">
+            <Color>Red</Color>
             <Color>#FF4BF713</Color>
             <Color>#FF114BFD</Color>
             <Color>#FFF1EF1D</Color>
         </ComboBox>
-        <ComboBox x:Name="FiguresComboBox" HorizontalAlignment="Left" Margin="1175,445,0,0" VerticalAlignment="Top" Width="120">
+
+
+
+
+
+
+
+        <ComboBox x:Name="FiguresComboBox" HorizontalAlignment="Left" Margin="997,432,0,0" VerticalAlignment="Top" Width="79">
             <ComboBoxItem Content="Filled Circle"/>
             <ComboBoxItem Content="Empty Circle"/>
             <ComboBoxItem Content="Ellipse"/>
             <ComboBoxItem Content="Cone"/>
             <ComboBoxItem Content="Cutted Cone"/>
+            <ComboBoxItem Content="PseudoPoint (Actuallu square)"/>
         </ComboBox>
-        <TextBox x:Name="EllipseBTextBox" HorizontalAlignment="Left" Height="24" Margin="895,547,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="35" RenderTransformOrigin="0.5,0.5">
+        <TextBox x:Name="EllipseBTextBox" HorizontalAlignment="Left" Height="24" Margin="906,547,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
-                    <SkewTransform AngleY="1.634"/>
+                    <SkewTransform AngleY="1.12"/>
                     <RotateTransform/>
                     <TranslateTransform Y="0.516"/>
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <TextBox x:Name="EllipseATextBox" HorizontalAlignment="Left" Height="24" Margin="895,520,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="35"/>
-        <Label x:Name="label_Copy5" Content="A" HorizontalAlignment="Left" Margin="872,520,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy6" Content="B" HorizontalAlignment="Left" Margin="872,546,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="FiguresListBox" HorizontalAlignment="Left" Height="253" Margin="1126,31,0,0" VerticalAlignment="Top" Width="169"/>
-        <Button x:Name="DeleteFigureButton" Content="Delete" HorizontalAlignment="Left" Margin="1220,289,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="EditFigureButton" Content="Edit" HorizontalAlignment="Left" Margin="1126,289,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="EllipseATextBox" HorizontalAlignment="Left" Height="24" Margin="906,520,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="50"/>
+        <Label x:Name="label_Copy5" Content="A" HorizontalAlignment="Left" Margin="872,520,0,0" VerticalAlignment="Top" Width="25"/>
+        <Label x:Name="label_Copy6" Content="B" HorizontalAlignment="Left" Margin="872,546,0,0" VerticalAlignment="Top" Width="25"/>
+        <ListBox x:Name="FiguresListBox" HorizontalAlignment="Left" Height="523" Margin="1088,10,0,0" VerticalAlignment="Top" Width="224" SelectionChanged="FiguresListBox_SelectionChanged"/>
+        <Button x:Name="DeleteFigureButton" Content="Delete" HorizontalAlignment="Left" Margin="1236,550,0,0" VerticalAlignment="Top" Width="75" Click="DeleteFigureButton_Click" Height="22"/>
+        <Button x:Name="SaveFigureButton" Content="Save" HorizontalAlignment="Left" Margin="983,520,0,0" VerticalAlignment="Top" Width="93" Click="SaveFigureButton_Click"/>
+        <Button x:Name="MonteCarloButton" Content="MonteCarlo" HorizontalAlignment="Left" Margin="1236,732,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <TextBox x:Name="MonteCarlotNumTextBox" HorizontalAlignment="Left" Height="23" Margin="1122,732,0,0" TextWrapping="Wrap" Text="200" VerticalAlignment="Top" Width="109"/>
 
 
 

@@ -83,15 +83,51 @@ namespace WpfEditor1.Models
         public override string ToString()
         {
             return
-                "Cutted Cone of Radius: "
-                + Radius.ToString()
-                + ", Small Radius: "
-                + SmallRadius.ToString()
-                + ", Height: "
-                + Height.ToString()
-                + " at "
+                Color.ToString()
+                + " CuttedCone at "
                 + Position.ToString()
                 + ";";
+        }
+
+
+        public override bool Hitted(Point point)
+        {
+            Point3D v1, v2, v3;
+            //Imagined qqual sided triangel 
+            Point3D pt = point.Position;
+
+            //lower left subtriangle
+            v1 = new Point3D(Position.X - Radius, Position.Y, 0);
+            v2 = Position;
+            v3 = new Point3D(Position.X - SmallRadius, Position.Y + Height, 0);
+
+            if (base.Barycentric(pt, v1, v2, v3))
+            {
+                return true;
+            }
+
+            //upper center subtriangle
+            v1 = new Point3D(Position.X - SmallRadius, Position.Y + Height, 0);
+            v2 = new Point3D(Position.X + SmallRadius, Position.Y + Height, 0);
+            v3 = Position;
+
+            if (base.Barycentric(pt, v1, v2, v3))
+            {
+                return true;
+            }
+
+            //lower right subtriangle
+            v1 = Position;
+            v2 = new Point3D(Position.X + SmallRadius, Position.Y + Height, 0);
+            v3 = new Point3D(Position.X + Radius, Position.Y, 0);
+
+            if (base.Barycentric(pt, v1, v2, v3))
+            {
+                return true;
+            }
+
+            return false;
+
         }
 
 

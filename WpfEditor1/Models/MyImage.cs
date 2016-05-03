@@ -27,82 +27,83 @@ namespace WpfEditor1.Models
             }
         }
 
-        public Point3D Begin { get; set; }
-        public Point3D End { get; set; }
-
-        public List<Figure> Figures = new List<Figure>()
+        private bool _borders = true;
+        public bool Borders
         {
+            get
+            {
+                return _borders;
+            }
+            set
+            {
+                _borders = value;
+                RedrawAll();
+            }
+        }
+
+
+
+        public Point3D Begin { get; set; } = new Point3D(-10, -10, -10);
+        public Point3D End { get; set; } = new Point3D(10, 10, 10);
+
+        public List<Figure> Figures = new List<Figure>() {
             /*
-            new EmptyCircle() {
-                Radius = 0.5,
+            new Circle()
+            {
+                Id = 1,
                 Position = new Point3D(0,0,0),
-                Color = Colors.Gold,
-                Resolution = 20,
-                LineWidth = 0.05
+                Radius = 2,
+                Resolution = 40,
+                Color = Colors.Blue
             },
-            new EmptyCircle() {
-                Radius = 0.75,
-                Position = new Point3D(0,0,0),
-                Color = Colors.Red,
-                Resolution = 20,
-                LineWidth = 0.05
+            new Circle()
+            {
+                Id = 2,
+                Position = new Point3D(4,0,0),
+                Radius = 2,
+                Resolution = 40,
+                Color = Colors.Blue
             },
-            new EmptyCircle() {
-                Radius = 1,
-                Position = new Point3D(0,0,0),
-                Color = Colors.Green,
-                Resolution = 20,
-                LineWidth = 0.05
+            new Circle()
+            {
+                Id = 3,
+                Position = new Point3D(0,4,0),
+                Radius = 2,
+                Resolution = 40,
+                Color = Colors.Blue
             },
-            new Cone() {
-                Radius = 1,
-                Height = 3,
-                Position = new Point3D(4,1,5),
-                Color = Colors.Cyan,
-                Resolution = 50,
+            new Circle()
+            {
+                Id = 4,
+                Position = new Point3D(4,4,0),
+                Radius = 2,
+                Resolution = 40,
+                Color = Colors.Blue
             },
-            new CuttedCone() {
-                Radius = 1,
-                SmallRadius = 0.2,
-                Height = 3,
-                Position = new Point3D(2,2,0),
-                Color = Colors.Lime,
-                Resolution = 50,
-            },
-            new CuttedCone() {
-                Radius = 1,
-                SmallRadius = 0.2,
-                Height = 3,
-                Position = new Point3D(-2,2,0),
-                Color = Colors.BlueViolet,
-                Resolution = 50,
-            },
-            */
-            new Ellipse() {
-                Radius = 1,
-                A = 0.5,
-                B = 0.3,
-                Position = new Point3D(2,2,0),
-                Color = Colors.Firebrick,
-                Resolution = 50,
-            },
-            new Ellipse() {
-                Radius = 1,
-                A = 0.3,
-                B = 0.5,
-                Position = new Point3D(-2,-2,0),
-                Color = Colors.AliceBlue,
-                Resolution = 50,
-            },
-            new Ellipse() {
-                Radius = 3,
-                A = 0.5,
-                B = 0.4,
-                Position = new Point3D(-2,2,0),
-                Color = Colors.Violet,
-                Resolution = 50,
+            
+
+            new Ellipse()
+            {
+                Id = 1,
+                Position = new Point3D(4,4,0),
+                A = 2, B = 1,
+                Radius = 2,
+                Resolution = 40,
+                Color = Colors.Blue
+            },*/
+
+            new CuttedCone()
+            {
+                Id = 1,
+                Position = new Point3D(0,0,-1),
+                Radius = 2,
+                SmallRadius = 0.5,
+                Height = 5,
+                Resolution = 40,
+                Color = Colors.Blue
             },
         };
+        
 
 
         public void AddLights()
@@ -130,8 +131,15 @@ namespace WpfEditor1.Models
             {
                 drawPseudoLine(new Point3D(0, -100, 0), new Point3D(0, 100, 0), 0.01, Colors.Red);
                 drawPseudoLine(new Point3D(-100, 0, 0), new Point3D(100, 0, 0), 0.01, Colors.Red);
-
             }
+
+            if (_borders)
+            {
+                //blah blah blah
+                drawPseudoLine(new Point3D(-100, -100, 100), new Point3D(100, -100, 100), 5, Colors.Red);
+                drawPseudoLine(new Point3D(100, -100, 100), new Point3D(100, -100, 100), 5, Colors.Red);
+            }
+
             foreach (Figure f in Figures)
             {
                 f.Draw(this);
@@ -142,6 +150,7 @@ namespace WpfEditor1.Models
         public MyImage(Viewport3D mainViewPort)
         {
             MainViewPort = mainViewPort;
+            RedrawAll();
         }
 
         public Viewport3D MainViewPort { get; set; }
@@ -223,6 +232,51 @@ namespace WpfEditor1.Models
             RedrawAll();
         }
 
+
+
+
+        public double SimpleSumSquares()
+        {
+            double S = 0;
+            foreach(Figure f in Figures)
+            {
+                S += f.Area();
+            }
+            return S;
+        }
+
+
+        public double DropRandomPoints(int n)
+        {
+            int good = 0;
+
+            for(int i=0; i< n; i++)
+            {
+                Point3D pos = new Point3D(
+                        rand.Next((int)Begin.X, (int)End.X),
+                        rand.Next((int)Begin.Y, (int)End.Y),
+                        0.5
+                        );
+
+                Point p = new Point() {
+                    Id = -9,
+                    Radius = 0.2,
+                    Color = Colors.Green,
+                    Position = pos
+                };
+                foreach(Figure f in Figures)
+                {
+                    if (f.Hitted(new Point() { Position = pos }))
+                    {
+                        p.Color = Colors.Orange;
+                        good++;
+                        break;
+                    }
+                }
+                Add(p);
+            }
+            return ((double)good / n) * 100;
+        }
 
 
 

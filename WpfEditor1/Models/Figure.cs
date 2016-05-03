@@ -31,6 +31,7 @@ namespace WpfEditor1.Models
         public abstract void Draw(MyImage image);
         public abstract void Scale(double size);
         public abstract override string ToString();
+        public abstract bool Hitted(Point p);
         public abstract double Area();
 
         public void Move(Point3D p)
