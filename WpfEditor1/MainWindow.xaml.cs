@@ -36,8 +36,8 @@ namespace WpfEditor1
         public double C12Speed = 0.1;
 
 
+        #region Utility figures
 
-        
         public void DrawTriangle(Point3D p1, Point3D p2, Point3D p3, string color)
         {
                 /* Usage:
@@ -63,98 +63,237 @@ namespace WpfEditor1
             MainViewPort.Children.Add(m);
         }
 
-
-
-
-        public void DrawCircle(Point3D center, Vector3D normal, double radius, int resolution, string color)
+        public void drawRect(Point3D a, Point3D b, Point3D c, Point3D d, Color color)
         {
 
-            ModelVisual3D m = new ModelVisual3D();
-            MeshGeometry3D mg = new MeshGeometry3D();
+            DrawTriangle(a, b, c, color.ToString());
+            DrawTriangle(a, c, d, color.ToString());
+
+            DrawTriangle(a, c, b, color.ToString());
+            DrawTriangle(a, d, c, color.ToString());
+        }
+        
+        public void drawPseudoLine(Point3D a, Point3D b, double w, Color color)
+        {
+            if (b.X < a.X)
+            {
+                Point3D t = a;
+                a = b;
+                b = t;
+            }
 
 
-            //Adding points to Mesh
+            drawRect(
+                new Point3D(a.X + w, a.Y - w, a.Z),
+                new Point3D(a.X + w, a.Y + w, a.Z),
+                new Point3D(b.X + w, b.Y + w, b.Z),
+                new Point3D(b.X + w, b.Y - w, b.Z),
+                color);
+
+
+            drawRect(
+                new Point3D(a.X - w, a.Y - w, a.Z),
+                new Point3D(a.X + w, a.Y + w, a.Z),
+                new Point3D(b.X + w, b.Y + w, b.Z),
+                new Point3D(b.X - w, b.Y - w, b.Z),
+                color);
+
+        }
+
+        #endregion
+
+
+
+
+
+
+        #region Main figures
+        /////////////////////////////////////////////
+
+        public void drawCircle(Point3D center, double R, int resolution, Color color)
+        {
+            //drawing
             double t = 2 * Math.PI / resolution;
             for (int i = 0; i < resolution; i++)
             {
-                mg.Positions.Add(new Point3D(radius * Math.Cos(t * i), 0, -radius * Math.Sin(t * i)));
+                DrawTriangle(                    
+                    new Point3D(center.X + R * Math.Cos(t * i), center.Y - R * Math.Sin(t * i), center.Z),
+                    new Point3D(center.X + R * Math.Cos(t * (i+1)), center.Y - R * Math.Sin(t * (i+1)),center.Z),
+                    center,
+                    color.ToString()
+                );
             }
             
+        }
+        
+        ////////////////////////////////////////////
+
+        public void drawCone(Point3D center, double R,double H, int resolution, Color color)
+        {
+            //drawing Side
+            double t = 2 * Math.PI / resolution;
+            for (int i = 0; i < resolution - 1; i++)
+            {
+                DrawTriangle(
+                    new Point3D(center.X + R * Math.Cos(t * i),center.Y,  center.Z - R * Math.Sin(t * i)),
+                    new Point3D(center.X, center.Y + H, center.Z),
+                    new Point3D(center.X + R * Math.Cos(t * (i + 1)),center.Y,  center.Z - R * Math.Sin(t * (i + 1))),
+                    color.ToString()
+                );
+            }
+            //Final segment of Side
+            DrawTriangle(
+                    new Point3D(center.X + R * Math.Cos(t * (resolution-1)), center.Y, center.Z - R * Math.Sin(t * (resolution - 1))),
+                    new Point3D(center.X, center.Y + H, center.Z),
+                    new Point3D(center.X + R * Math.Cos(t * resolution), center.Y, center.Z - R * Math.Sin(t * resolution)),
+                    color.ToString()
+                );
+
+            //drawing Base
+            for (int i = 0; i < resolution - 1; i++)
+            {
+                DrawTriangle(
+                    new Point3D(center.X + R * Math.Cos(t * i),center.Y,  center.Z - R * Math.Sin(t * i)),                    
+                    new Point3D(center.X + R * Math.Cos(t * (i + 1)),center.Y, center.Z - R * Math.Sin(t * (i + 1))),
+                    center,
+                    color.ToString()
+                );
+            }
+            //Final segment
+            DrawTriangle(
+                    new Point3D(center.X + R * Math.Cos(t * (resolution-1)), center.Y, center.Z - R * Math.Sin(t * (resolution - 1))),
+                    new Point3D(center.X + R * Math.Cos(t * resolution), center.Y, center.Z - R * Math.Sin(t * resolution)),
+                    center,
+                    color.ToString()
+                );
+        }
+
+        ////////////////////////////////////////
+
+        public void drawCuttedCone(Point3D center, double R,double r, double H, int resolution, Color color)
+        {
+            double t = 2 * Math.PI / resolution;
+            
+            //drawing Side
             for (int i = 0; i < resolution; i++)
             {
-                var a = 0;
-                var d = i + 1;
-                var c = (i < (resolution - 1)) ? i + 2 : 1;
-
-                mg.TriangleIndices.Add(a);
-                mg.TriangleIndices.Add(d);
-                mg.TriangleIndices.Add(c);
+                DrawTriangle(
+                    new Point3D(center.X + R * Math.Cos(t * i), center.Y, center.Z - R * Math.Sin(t * i)),
+                    new Point3D(center.X + r * Math.Cos(t * i), center.Y + H, center.Z - r * Math.Sin(t * i)),
+                    new Point3D(center.X + R * Math.Cos(t * (i + 1)), center.Y, center.Z - R * Math.Sin(t * (i + 1))),
+                    color.ToString()
+                );
+                DrawTriangle(
+                    new Point3D(center.X + r * Math.Cos(t * (i + 1)), center.Y + H, center.Z - r * Math.Sin(t * (i + 1))),
+                    new Point3D(center.X + R * Math.Cos(t * (i + 1)), center.Y, center.Z - R * Math.Sin(t * (i + 1))),                    
+                    new Point3D(center.X + r * Math.Cos(t * i), center.Y + H, center.Z - r * Math.Sin(t * i)),
+                    
+                    color.ToString()
+                );
             }
-
-            //Coloring
-            BrushConverter bc = new BrushConverter();
-            Brush b = (Brush)bc.ConvertFromString(color);
-            DiffuseMaterial mat = new DiffuseMaterial(b);
-            m.Content = new GeometryModel3D(mg, mat);
             
 
-            //Rotating
-            var trn = new Transform3DGroup();           
-            var up = new Vector3D(0, 1, 0);
-            normal.Normalize();
-            var axis = Vector3D.CrossProduct(up, normal);
-            var angle = Vector3D.AngleBetween(up, normal);
-            trn.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(axis, 2*angle)));
-            trn.Children.Add(new TranslateTransform3D(new Vector3D(center.X, center.Y, center.Z)));
 
-            m.Transform = trn;
-            MainViewPort.Children.Add(m);
+
+
+
+
+
+
+
+
+
+
+            for (int i = 0; i < resolution; i++)
+            {
+                DrawTriangle(
+                    new Point3D(center.X + r * Math.Cos(t * i), center.Y + H, center.Z - r * Math.Sin(t * i)),
+                    new Point3D(center.X, center.Y + H, center.Z),
+                    new Point3D(center.X + r * Math.Cos(t * (i + 1)), center.Y + H, center.Z - r * Math.Sin(t * (i + 1))),
+                    
+                    color.ToString()
+                );
+            }
+
+
+
+            //drawing Base
+            for (int i = 0; i < resolution; i++)
+            {
+                DrawTriangle(
+                    new Point3D(center.X + R * Math.Cos(t * i), center.Y, center.Z - R * Math.Sin(t * i)),
+                    new Point3D(center.X + R * Math.Cos(t * (i + 1)), center.Y, center.Z - R * Math.Sin(t * (i + 1))),
+                    center,
+                    color.ToString()
+                );
+            }
             
         }
 
+        /////////////////////////////////////////////  
 
+        public void drawEmptyCircle(Point3D center, double R, int resolution,double width, Color color)
+        {
+            double r = R + width;
+            //drawing
+            double t = 2 * Math.PI / resolution;
+            for (int i = 0; i < resolution ; i++)
+            {
+                drawRect(
+                    new Point3D(center.X + R * Math.Cos(t * i), center.Y - R * Math.Sin(t * i), center.Z),
+                    new Point3D(center.X + r * Math.Cos(t * i), center.Y - r * Math.Sin(t * i), center.Z),
+                    new Point3D(center.X + r * Math.Cos(t * (i - 1)), center.Y - r * Math.Sin(t * (i - 1)), center.Z),
+                    new Point3D(center.X + R * Math.Cos(t * (i-1)), center.Y - R * Math.Sin(t * (i - 1)), center.Z),
+                    color
+                    );
+            }
+
+        }
         
+        /////////////////////////////////////////////
+
+        public void drawEllipse(Point3D center, double R,double a, double b, int resolution, Color color)
+        {
+            double t = 2 * Math.PI / resolution;
+            for (int i = 0; i < resolution; i++)
+            {
+                DrawTriangle(
+                    new Point3D(center.X + a * R * Math.Cos(t * i), center.Y - b * R * Math.Sin(t * i), center.Z),
+                    new Point3D(center.X + a * R * Math.Cos(t * (i + 1)), center.Y - b * R * Math.Sin(t * (i + 1)), center.Z),
+                    center,
+                    color.ToString()
+                );
+            }
+        }
+
+        /////////////////////////////////////////////
+        #endregion
 
 
-        
+
+
 
 
 
         public MainWindow()
         {
             InitializeComponent();
-            
+            drawPseudoLine(new Point3D(0, -100, 0), new Point3D(0, 100, 0), 0.01, Colors.Red);
+            drawPseudoLine(new Point3D(-100, 0, 0), new Point3D(100, 0, 0), 0.01, Colors.Red);
+            //drawCuttedCone(new Point3D(0, 0, 0), 0.5, 0.1, 2.0, 40, Colors.Aqua);
+            //drawEllipse(new Point3D(0, 0, 0), 2, 3, 1, 40, Colors.Purple);
             
         }
 
 
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                double x1 = double.Parse(C1XInput.Text);
-                double y1 = double.Parse(C1YInput.Text);
-                double z1 = double.Parse(C1ZInput.Text);
 
-                MainCamera.Position = new Point3D(x1, y1, z1);
 
-                double x2 = double.Parse(C2XInput.Text);
-                double y2 = double.Parse(C2YInput.Text);
-                double z2 = double.Parse(C2ZInput.Text);
 
-                MainCamera.LookDirection = new Vector3D(x2, y2, z2);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Wrong input");
-            }
-        }
+
+
+        #region Controls
         
-     
-
-
-        #region C1 Controls
 
         private void C1UpButton_Click(object sender, RoutedEventArgs e)
         {
@@ -163,7 +302,6 @@ namespace WpfEditor1
                 MainCamera.Position.Y + C12Speed,
                 MainCamera.Position.Z
             );
-            C1YInput.Text = MainCamera.Position.Y.ToString();
         }
 
         private void C1DownButton_Click(object sender, RoutedEventArgs e)
@@ -173,7 +311,6 @@ namespace WpfEditor1
                 MainCamera.Position.Y - C12Speed,
                 MainCamera.Position.Z
             );
-            C1YInput.Text = MainCamera.Position.Y.ToString();
         }
 
         private void C1LeftButton_Click(object sender, RoutedEventArgs e)
@@ -183,7 +320,6 @@ namespace WpfEditor1
                 MainCamera.Position.Y,
                 MainCamera.Position.Z
             );
-            C1XInput.Text = MainCamera.Position.X.ToString();
         }
 
         private void C1RightButton_Click(object sender, RoutedEventArgs e)
@@ -193,7 +329,6 @@ namespace WpfEditor1
                 MainCamera.Position.Y,
                 MainCamera.Position.Z
             );
-            C1XInput.Text = MainCamera.Position.X.ToString();
         }
 
         private void C1MZButton_Click(object sender, RoutedEventArgs e)
@@ -203,7 +338,6 @@ namespace WpfEditor1
                 MainCamera.Position.Y,
                 MainCamera.Position.Z - C12Speed
             );
-            C1ZInput.Text = MainCamera.Position.Z.ToString();
         }
 
         private void C1LZButton_Click(object sender, RoutedEventArgs e)
@@ -213,170 +347,99 @@ namespace WpfEditor1
                 MainCamera.Position.Y,
                 MainCamera.Position.Z + C12Speed
             );
-            C1ZInput.Text = MainCamera.Position.Z.ToString();
         }
 
 
-        #endregion
-
-
-
-        //TODO: fix C2
-        #region C2 controls
-        private void C2UpButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainCamera.LookDirection = new Vector3D(
-                MainCamera.LookDirection.X,
-                MainCamera.LookDirection.Y - C12Speed,
-                MainCamera.LookDirection.Z
-            );
-            C2YInput.Text = MainCamera.LookDirection.Y.ToString();
-        }
-
-        private void C2DownButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainCamera.LookDirection = new Vector3D(
-                MainCamera.LookDirection.X,
-                MainCamera.LookDirection.Y + C12Speed,
-                MainCamera.LookDirection.Z
-            );
-            C2YInput.Text = MainCamera.LookDirection.Y.ToString();
-        }
-
-        private void C2LeftButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainCamera.LookDirection = new Vector3D(
-                MainCamera.LookDirection.X + C12Speed,
-                MainCamera.LookDirection.Y,
-                MainCamera.LookDirection.Z
-            );
-            C2XInput.Text = MainCamera.LookDirection.X.ToString();
-        }
-
-        private void C2RightButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainCamera.LookDirection = new Vector3D(
-                MainCamera.LookDirection.X - C12Speed,
-                MainCamera.LookDirection.Y,
-                MainCamera.LookDirection.Z
-            );
-            C2XInput.Text = MainCamera.LookDirection.X.ToString();
-        }
-
-        private void C2MZButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainCamera.LookDirection = new Vector3D(
-                MainCamera.LookDirection.X,
-                MainCamera.LookDirection.Y,
-                MainCamera.LookDirection.Z + C12Speed
-            );
-            C2ZInput.Text = MainCamera.LookDirection.Z.ToString();
-        }
-
-        private void C2LZButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainCamera.LookDirection = new Vector3D(
-                MainCamera.LookDirection.X,
-                MainCamera.LookDirection.Y,
-                MainCamera.LookDirection.Z - C12Speed
-            );
-            C2ZInput.Text = MainCamera.LookDirection.Z.ToString();
-        }
-
-
-
-
-        #endregion
+        
+        
 
         private void C12SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             C12Speed = e.NewValue;
-            C12SpeedInput.Text = e.NewValue.ToString();
         }
 
-        private void C12SpeedInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            MainCamera.LookDirection = new Vector3D(
+                Math.Sin(slider.Value * Math.PI / 180),
+                MainCamera.LookDirection.Y,
+                MainCamera.LookDirection.Z);
+        }
+
+        private void slider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MainCamera.LookDirection = new Vector3D(
+                MainCamera.LookDirection.X,
+                -Math.Cos(slider1.Value * Math.PI / 180),
+                MainCamera.LookDirection.Z);
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            MainCamera.LookDirection = MainCamera.LookDirection * (-1);
+        }
+
+
+
+        #endregion
+
+        private void AddFigureButton_Click(object sender, RoutedEventArgs e)
+        {
+            Point3D center;
+            double R;
+            double r;
+            double H;
+            double width;        
+            int resolution;
+            Color color;
+
+            double a, b;
+
+
             try
             {
-                C12Speed = double.Parse(C12SpeedInput.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Wrong input");
-            }
-
-        }
-
-
-
-
-
-        
-        private void AddTriangleButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Point3D p1 = new Point3D(
-                    double.Parse(NTX1Input.Text),
-                    double.Parse(NTY1Input.Text),
-                    double.Parse(NTZ1Input.Text)
+                center = new Point3D(
+                    double.Parse(CenterXTextBox.Text),
+                    double.Parse(CenterYTextBox.Text),
+                    double.Parse(CenterZTextBox.Text)
                     );
+                R = double.Parse(BigRadiusTextBox.Text);
+                r = double.Parse(SmallRadiusTextBox.Text);
+                H = double.Parse(HeightTextBox.Text);
+                width = double.Parse(LineWidthTextBox.Text);
+                resolution = int.Parse(ResolutionTextBox.Text);
+                color = (Color)ColorsComboBox.SelectedItem;
 
-                Point3D p2 = new Point3D(
-                    double.Parse(NTX2Input.Text),
-                    double.Parse(NTY2Input.Text),
-                    double.Parse(NTZ2Input.Text)
-                    );
+                a = double.Parse(EllipseATextBox.Text);
+                b = double.Parse(EllipseBTextBox.Text);
 
-                Point3D p3 = new Point3D(
-                    double.Parse(NTX3Input.Text),
-                    double.Parse(NTY3Input.Text),
-                    double.Parse(NTZ3Input.Text)
-                    );
-
-                string color = NTColorInput.Text;
-
-                DrawTriangle(p1, p2, p3, color);
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Wrong input");
+                MessageBox.Show("Sorry");
+                return;
             }
-        }
 
-        private void NTX2Input1_Copy1_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
-        }
-
-        private void NCircleAddButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
+            switch (FiguresComboBox.SelectedIndex)
             {
-                Point3D center = new Point3D(
-                double.Parse(NCircleXInput.Text),
-                double.Parse(NCircleYInput.Text),
-                double.Parse(NCircleZInput.Text)
-                );
-
-                Vector3D normal = new Vector3D(
-                    double.Parse(NCircleXNormInput.Text),
-                    double.Parse(NCircleYNormInput.Text),
-                    double.Parse(NCircleZNormInput.Text)
-                    );
-
-                double radius = double.Parse(NCircleRadInput.Text);
-                int resolution = int.Parse(NCircleResInput.Text);
-                string color = NCircleColInput.Text;
-
-                DrawCircle(center, normal, radius, resolution, color);
+                case 0:
+                    drawCircle(center, R, resolution, color);
+                    break;
+                case 1:
+                    drawEmptyCircle(center, R, resolution,width, color);
+                    break;
+                case 2:
+                    drawEllipse(center, R, a, b, resolution, color);
+                    break;
+                case 3:
+                    drawCone(center, R, H, resolution, color);
+                    break;
+                case 4:
+                    drawCuttedCone(center, R, r, H, resolution, color);
+                    break;
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Wrong input");
-            }
-            
-
         }
     }
+
 }
