@@ -9,6 +9,7 @@ namespace WpfEditor1.Models
 {
     class CuttedCone : Cone
     {
+
         public double SmallRadius;
 
         public override void Scale(double size) { }
@@ -78,15 +79,18 @@ namespace WpfEditor1.Models
 
         public override double Area()
         {
-            return 0;
+            return Math.PI*(Radius*Radius-SmallRadius*SmallRadius);
         }
+
+        public override double FullArea()
+        {
+            return Math.PI * Height * (SmallRadius * SmallRadius + SmallRadius * Radius + Radius * Radius)/3;
+        }
+
         public override string ToString()
         {
-            return
-                Color.ToString()
-                + " CuttedCone at "
-                + Position.ToString()
-                + ";";
+            return base.ToString() + ", r:" + SmallRadius.ToString();
+
         }
 
 

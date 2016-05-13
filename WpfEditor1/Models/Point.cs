@@ -27,6 +27,11 @@ namespace WpfEditor1.Models
             return false;
         }
 
+        public override double Perimeter()
+        {
+            return 0;
+        }
+
         public override double Area()
         {
             return 0;

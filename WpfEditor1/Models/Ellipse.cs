@@ -9,6 +9,7 @@ namespace WpfEditor1.Models
 {
     public class Ellipse:Circle
     {
+
         public double A, B;
 
         public override void Scale(double size) { }
@@ -42,13 +43,15 @@ namespace WpfEditor1.Models
             return Math.PI * A * B;
         }
 
+        public override double Perimeter()
+        {
+            return 4*(Math.PI * A * B + A - B)/(A + B);
+        }
+
         public override string ToString()
         {
-            return
-                Color.ToString()
-                + " Ellipse at "
-                + Position.ToString()
-                + ";";
+            return $"{Name} at ({Position.ToString()}) "
+                + $"A: {A}, B:{B}, S: {Area()}, P: P{Perimeter()}";
         }
     }
 }

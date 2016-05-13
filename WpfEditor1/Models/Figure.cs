@@ -12,6 +12,14 @@ namespace WpfEditor1.Models
     {
         public int Id;
 
+        public virtual string Name
+        {
+            get
+            {
+                return GetType().ToString().Split('.').Last();
+            }
+        }
+
         public Point3D Position { get; set; }
         public double Radius { get; set; }
         public Color Color { get; set; }
@@ -33,6 +41,7 @@ namespace WpfEditor1.Models
         public abstract override string ToString();
         public abstract bool Hitted(Point p);
         public abstract double Area();
+        public abstract double Perimeter();
 
         public void Move(Point3D p)
         {

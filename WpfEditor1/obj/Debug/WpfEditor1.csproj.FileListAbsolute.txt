@@ -12,3 +12,5 @@ C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Deb
 C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.csproj.GenerateResource.Cache
 C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.exe
 C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\obj\Debug\WpfEditor1.pdb
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Nik\Documents\Visual Studio 2015\Projects\WpfEditor1\WpfEditor1\bin\Debug\Newtonsoft.Json.xml

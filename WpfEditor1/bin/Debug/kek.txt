@@ -1,0 +1,2 @@
+%%%WpfEditor1.Models.Ellipse
+{"A":1.0,"B":2.0,"Id":52890,"Resolution":30,"LineWidth":0.0,"Name":"Ellipse","Position":"0,0,0","Radius":2.0,"Color":"#FF114BFD"}

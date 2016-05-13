@@ -34,13 +34,6 @@ namespace WpfEditor1.Models
             return base.Hitted(p);
         }
 
-        public override string ToString()
-        {
-            return
-                Color.ToString()
-                + " Circle at "
-                + Position.ToString()
-                + ";";
-        }
+        
     }
 }

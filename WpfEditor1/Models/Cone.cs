@@ -59,18 +59,30 @@ namespace WpfEditor1.Models
             return base.Area();
         }
 
-        public override double Area()
+        public virtual double FullArea()
         {
             return BaseArea()+ SideArea();
         }
 
+        public override double Area()
+        {
+            return Radius*Height;
+        }
+
+        public virtual double Volume()
+        {
+            return Math.PI * Radius*Radius*Height/3;
+        }
+
         public override string ToString()
         {
-            return
-                Color.ToString()
-                + " Cone at "
-                + Position.ToString()
-                + ";";
+            return $"{Name} at ({Position.ToString()}); "
+                + $"R: {Radius}, "
+                + $"H: {Height}, "
+                + $"S: {Area()}, "
+                + $"Sf: {FullArea()}, "
+                + $"V: {Volume()}";
+
         }
 
 

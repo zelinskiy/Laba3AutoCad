@@ -42,17 +42,21 @@ namespace WpfEditor1.Models
                     );
             }
         }
+
         public override double Area()
         {
             return Math.PI * Radius * Radius;
         }
+
+        public override double Perimeter()
+        {
+            return 2 * Math.PI * Radius;
+        }
+
         public override string ToString()
         {
-            return
-                Color.ToString()
-                + " EmptyCircle at "
-                + Position.ToString()
-                + ";";
+            return $"{Name} at ({Position.ToString()}) "
+                +$"R: {Radius}, S:{Area()}, P: {Perimeter()}";                
         }
 
         

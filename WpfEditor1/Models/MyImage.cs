@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace WpfEditor1.Models
     public class MyImage
     {
         public Random rand = new Random();
+
 
         private bool _xyaxis = true;
         public bool XYAxis
@@ -46,63 +49,7 @@ namespace WpfEditor1.Models
         public Point3D Begin { get; set; } = new Point3D(-10, -10, -10);
         public Point3D End { get; set; } = new Point3D(10, 10, 10);
 
-        public List<Figure> Figures = new List<Figure>() {
-            /*
-            new Circle()
-            {
-                Id = 1,
-                Position = new Point3D(0,0,0),
-                Radius = 2,
-                Resolution = 40,
-                Color = Colors.Blue
-            },
-            new Circle()
-            {
-                Id = 2,
-                Position = new Point3D(4,0,0),
-                Radius = 2,
-                Resolution = 40,
-                Color = Colors.Blue
-            },
-            new Circle()
-            {
-                Id = 3,
-                Position = new Point3D(0,4,0),
-                Radius = 2,
-                Resolution = 40,
-                Color = Colors.Blue
-            },
-            new Circle()
-            {
-                Id = 4,
-                Position = new Point3D(4,4,0),
-                Radius = 2,
-                Resolution = 40,
-                Color = Colors.Blue
-            },
-            
-
-            new Ellipse()
-            {
-                Id = 1,
-                Position = new Point3D(4,4,0),
-                A = 2, B = 1,
-                Radius = 2,
-                Resolution = 40,
-                Color = Colors.Blue
-            },*/
-
-            new CuttedCone()
-            {
-                Id = 1,
-                Position = new Point3D(0,0,-1),
-                Radius = 2,
-                SmallRadius = 0.5,
-                Height = 5,
-                Resolution = 40,
-                Color = Colors.Blue
-            },
-        };
+        public List<Figure> Figures = new List<Figure>();
         
 
 
@@ -246,7 +193,7 @@ namespace WpfEditor1.Models
         }
 
 
-        public double DropRandomPoints(int n)
+        public double DropRandomPoints(int n, bool show)
         {
             int good = 0;
 
@@ -273,12 +220,100 @@ namespace WpfEditor1.Models
                         break;
                     }
                 }
-                Add(p);
+                if (show)
+                {
+                    Add(p);
+                }
             }
             return ((double)good / n) * 100;
         }
 
 
+
+        public override string ToString()
+        {
+            return $"Image from ({Begin}) to ({End})";
+        }
+
+
+        public double Area()
+        {
+            return Math.Abs(End.X - Begin.X) * Math.Abs(End.Y - Begin.Y);
+        }
+
+        public double SumAreas()
+        {
+            return this.Figures.Select(f => f.Area()).Sum();
+        }
+
+        public double SumPerimeters()
+        {
+            return this.Figures.Select(f => f.Perimeter()).Sum();
+        }
+
+
+
+
+        public void Save(string filename)
+        {
+            using (TextWriter writer = new StreamWriter(File.Create(filename)))
+            {
+                foreach (var g in Figures.GroupBy(f => f.Name))
+                {
+                    writer.WriteLine("%%%" + g.First().GetType());
+                    foreach (var fig in g)
+                    {
+                        writer.WriteLine(JsonConvert.SerializeObject(fig));
+                    }
+                }
+            }
+        }
+
+        public void Load(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                using (TextReader reader = new StreamReader(File.OpenRead(filename)))
+                {
+                    List<Models.Figure> figs = new List<Models.Figure>();
+                    string line = "";
+                    string type = "";
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line.StartsWith("%%%"))
+                        {
+                            type = line.Split('.').Last();
+                        }
+                        else
+                        {
+                            switch (type)
+                            {
+                                case "Ellipse":
+                                    figs.Add(JsonConvert.DeserializeObject<Models.Ellipse>(line));
+                                    break;
+                                case "Cone":
+                                    figs.Add(JsonConvert.DeserializeObject<Models.Cone>(line));
+                                    break;
+                                case "CuttedCone":
+                                    figs.Add(JsonConvert.DeserializeObject<Models.CuttedCone>(line));
+                                    break;
+                                case "Point":
+                                    figs.Add(JsonConvert.DeserializeObject<Models.Point>(line));
+                                    break;
+                                case "Circle":
+                                    figs.Add(JsonConvert.DeserializeObject<Models.Circle>(line));
+                                    break;
+                                case "EmptyCircle":
+                                    figs.Add(JsonConvert.DeserializeObject<Models.EmptyCircle>(line));
+                                    break;
+                            }
+                        }
+                    }
+                    Figures = figs;                    
+                    RedrawAll();
+                }
+            }
+        }
 
 
 

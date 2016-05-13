@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Windows.Media.Media3D;
 using WpfEditor1.Models;
 using System.Reflection;
+using System.IO;
+using Newtonsoft.Json;
 
 
 
@@ -40,12 +42,95 @@ namespace WpfEditor1
 
         public MyImage myImage;
 
+        public List<MyImage> Images = new List<MyImage>();
+
+
+        
+
 
         public MainWindow()
         {
             InitializeComponent();
             myImage = new MyImage(MainViewPort);
+            Images.Add(myImage);
+
+            foreach(MyImage im in Images)
+            {
+                ImagesListBox.Items.Add(im);
+            }
+
+
+            string[] names = new string[]
+            {
+                "Circle",
+                "EmptyCircle",
+                "Ellipse",
+                "Cone",
+                "CuttedCone",
+                "Point",                
+            };
+
+            FiguresComboBox.ItemsSource = names;
+
+            foreach (MyImage im in Images)
+            {
+                ImagesListBox.Items.Add(im);
+            }
+
+            myImage.Add(
+                new Circle()
+                {
+                    Id=0,
+                    Position = new Point3D(0, 0, 0),
+                    Radius = 2,
+                    LineWidth = 1,
+                    Resolution = 30,
+                    Color = Colors.Red,
+                });
+            myImage.Add(new EmptyCircle()
+            {
+                Id = 1,
+                Position = new Point3D(5, 0, 0),
+                Radius = 2,
+                Resolution = 30,
+                LineWidth = 0.05,
+                Color = Colors.Red,
+            });
+            
+            myImage.Add(new Models.Ellipse()
+            {
+                Id = 2,
+                Position = new Point3D(10, 0, 0),
+                Resolution = 30,
+                A = 1,
+                B = 2,
+                Color = Colors.Red,
+            });
+            myImage.Add(new Cone()
+            {
+                Id = 3,
+                Position = new Point3D(-5, 0, 0),
+                Radius = 3,
+                Height = 6,
+                Resolution = 30,
+                Color = Colors.Red,
+            });
+            
+            myImage.Add(new CuttedCone()
+            {
+                Id = 4,
+                Position = new Point3D(-10, 0, 0),
+                Radius = 3,
+                SmallRadius = 0.5,
+                Height = 5,
+                Resolution = 50,
+                Color = Colors.Red,
+            });
+            RefreshFiguresView();
+
         }
+
+
 
 
 
@@ -277,7 +362,6 @@ namespace WpfEditor1
             }
             myImage.Remove(((Models.Figure)FiguresListBox.SelectedItem).Id);
             RefreshFiguresView();
-
         }
 
         
@@ -285,6 +369,10 @@ namespace WpfEditor1
 
         private void SaveFigureButton_Click(object sender, RoutedEventArgs e)
         {
+            if(FiguresListBox.SelectedIndex == -1)
+            {
+                return;
+            }
             DeleteFigureButton_Click(null, null);
             AddFigureButton_Click(null, null);
         }
@@ -307,7 +395,7 @@ namespace WpfEditor1
 
             if (MyFigure is Cone)
             {
-                SmallRadiusTextBox.Text = ((CuttedCone)MyFigure).Height.ToString();
+                HeightTextBox.Text = ((Cone)MyFigure).Height.ToString();
             }
 
             if (MyFigure is EmptyCircle)
@@ -320,6 +408,7 @@ namespace WpfEditor1
                 LineWidthTextBox.Text = ((EmptyCircle)MyFigure).LineWidth.ToString();
             }
             ColorsComboBox.SelectedItem = MyFigure.Color;
+            FiguresComboBox.SelectedItem = MyFigure.Name;
         }
 
 
@@ -337,7 +426,6 @@ namespace WpfEditor1
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            myImage.Remove(-9);
             int n;
             try
             {
@@ -348,9 +436,78 @@ namespace WpfEditor1
                 MessageBox.Show("Hello from monte carlo");
                 return;
             }
-            double x = myImage.DropRandomPoints(n);
+            double x = myImage.DropRandomPoints(n, true);
             myImage.RedrawAll();
-            MessageBox.Show(x.ToString() + "%" );
+            MessageBox.Show("Area: " + (x / myImage.Area()).ToString()  );
+            
+        }
+
+        private void ImagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ImagesListBox.SelectedIndex == -1)
+            {
+                return;
+            }
+
+
+        }
+
+        private void ColorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void FiguresComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ShowAreaButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(myImage.SumAreas().ToString());
+        }
+
+        private void AhowPerimeterButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(myImage.SumPerimeters().ToString());
+        }
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "Json (.txt)|*.txt";
+
+            bool? result = dlg.ShowDialog();
+            
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                myImage.Load(filename);
+            }
+            
+            RefreshFiguresView();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "Json (.txt)|*.txt";
+
+            bool? result = dlg.ShowDialog();
+
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                myImage.Save(filename);
+            }
+            
         }
     }
 
