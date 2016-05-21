@@ -34,6 +34,9 @@ namespace WpfEditor1.Models
             return base.Hitted(p);
         }
 
+
+        
+
         
     }
 }

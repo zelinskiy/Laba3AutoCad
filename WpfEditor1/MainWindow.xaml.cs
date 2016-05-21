@@ -87,6 +87,18 @@ namespace WpfEditor1
                     Resolution = 30,
                     Color = Colors.Red,
                 });
+            
+            myImage.Add(
+                new Circle()
+                {
+                    Id = 1,
+                    Position = new Point3D(0, 2, 0),
+                    Radius = 2,
+                    LineWidth = 1,
+                    Resolution = 30,
+                    Color = Colors.Red,
+                });
+                        
             myImage.Add(new EmptyCircle()
             {
                 Id = 1,
@@ -125,7 +137,10 @@ namespace WpfEditor1
                 Height = 5,
                 Resolution = 50,
                 Color = Colors.Red,
-            });
+            });            
+            
+
+
             RefreshFiguresView();
 
         }
@@ -508,6 +523,83 @@ namespace WpfEditor1
                 myImage.Save(filename);
             }
             
+        }
+
+
+
+
+
+        private void button_Click_1(object sender, RoutedEventArgs e)
+        {
+            List<Models.Point> newPoints = new List<Models.Point>();
+            double dl = 0.2;
+            double psize = 0.05;
+
+            /*
+            //////////////////////////
+
+        
+            Point3D A = new Point3D(-1, -1, 0);
+            Point3D B = new Point3D(1, 1, 0);
+
+            foreach (Point3D p in Models.Figure.PointsOnLine(B, A, 0.1))
+            {
+                myImage.Add(new Models.Point()
+                {
+                    Id = -9,
+                    Radius = psize,
+                    Color = Colors.Magenta,
+                    Position = p
+                });
+            }
+
+            ///////////////
+            */
+
+
+            
+            foreach (Models.Figure myfig in myImage.Figures)
+            {
+                
+
+                foreach (Point3D p in myfig.DropPointsOnPerimeter(dl))
+                {
+                    
+                    int hitCounter = 0;
+
+                    Models.Point newPoint = new Models.Point()
+                    {
+                        Id = -9,
+                        Radius = psize,
+                        Color = Colors.Green,
+                        Position = new Point3D(p.X, p.Y, 1),
+                    };
+
+                    foreach (Models.Figure fig in myImage.Figures)
+                    {
+                        if(fig != myfig)
+                        {
+                            if (fig.Hitted(newPoint))
+                            {
+                                hitCounter++;
+                            }
+                        }
+                        
+                    }
+
+                    if (hitCounter >= 1)
+                    {
+                        newPoint.Color = Colors.Orange;
+                    }
+
+
+                    newPoints.Add(newPoint);
+                }
+            }
+
+            myImage.Figures.AddRange(newPoints);  
+            myImage.RedrawAll();
+            MessageBox.Show((newPoints.Where(p => p.Color == Colors.Green).Count()*dl).ToString());
         }
     }
 

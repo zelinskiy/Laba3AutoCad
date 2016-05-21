@@ -45,5 +45,10 @@ namespace WpfEditor1.Models
                 + Position.ToString()
                 + ";";
         }
+
+        public override List<Point3D> DropPointsOnPerimeter(double dl)
+        {
+            return new List<Point3D>();
+        }
     }
 }

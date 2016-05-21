@@ -57,5 +57,27 @@ namespace WpfEditor1.Models
                 );
         }
 
+
+        public abstract List<Point3D> DropPointsOnPerimeter(double dl);
+
+
+        public static List<Point3D> PointsOnLine(Point3D A, Point3D B, double dl)
+        {
+            List<Point3D> R = new List<Point3D>();
+
+            double len = Math.Sqrt((B.X - A.X) * (B.X - A.X) + (B.Y - A.Y) * (B.Y - A.Y));
+
+            for (int i = 0; i * dl < len; i++) {
+                double t = dl * i / len;
+                R.Add(new Point3D(
+                    (1 - t) * A.X + t * B.X,
+                    (1 - t) * A.Y + t * B.Y,
+                    0
+                ));
+            }
+
+            return R;
+        }
+        
     }
 }

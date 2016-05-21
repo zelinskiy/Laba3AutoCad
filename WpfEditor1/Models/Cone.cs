@@ -113,6 +113,21 @@ namespace WpfEditor1.Models
         }
 
 
+        public override List<Point3D> DropPointsOnPerimeter(double dl)
+        {
+            List<Point3D> R = new List<Point3D>();
+
+            Point3D A = new Point3D(Position.X - Radius, Position.Y, 0);
+            Point3D B = new Point3D(Position.X + Radius, Position.Y, 0);
+            Point3D C = new Point3D(Position.X, Position.Y + Height, 0);
+
+            R.AddRange(Figure.PointsOnLine(A, B, dl));
+            R.AddRange(Figure.PointsOnLine(B, C, dl));
+            R.AddRange(Figure.PointsOnLine(C, A, dl));
+
+            return R;
+
+        }
 
 
     }

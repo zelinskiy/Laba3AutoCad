@@ -53,5 +53,22 @@ namespace WpfEditor1.Models
             return $"{Name} at ({Position.ToString()}) "
                 + $"A: {A}, B:{B}, S: {Area()}, P: P{Perimeter()}";
         }
+
+
+
+        public override List<Point3D> DropPointsOnPerimeter(double dl)
+        {
+            List<Point3D> R = new List<Point3D>();
+
+            int resolution = (int)( this.Perimeter() / dl);
+            double t = 2 * Math.PI / resolution; ;
+            for (int i = 0; i < resolution; i++)
+            {
+                R.Add(new Point3D(Position.X + A*Math.Cos(t * i), Position.Y - B*Math.Sin(t * i), Position.Z + 0.05));
+            }
+            return R;
+        }
+
+
     }
 }

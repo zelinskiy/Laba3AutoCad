@@ -124,10 +124,11 @@
         <Button x:Name="MonteCarloButton" Content="MonteCarlo" HorizontalAlignment="Left" Margin="1115,732,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <TextBox x:Name="MonteCarlotNumTextBox" HorizontalAlignment="Left" Height="23" Margin="1057,732,0,0" TextWrapping="Wrap" Text="200" VerticalAlignment="Top" Width="53"/>
         <ListBox x:Name="ImagesListBox" HorizontalAlignment="Left" Height="189" Margin="1195,565,0,0" VerticalAlignment="Top" Width="116" SelectionChanged="ImagesListBox_SelectionChanged"/>
-        <Button x:Name="ShowAreaButton" Content="Area" HorizontalAlignment="Left" Margin="923,666,0,0" VerticalAlignment="Top" Width="75" Click="ShowAreaButton_Click"/>
-        <Button x:Name="AhowPerimeterButton" Content="Perimeter" HorizontalAlignment="Left" Margin="923,693,0,0" VerticalAlignment="Top" Width="75" Click="AhowPerimeterButton_Click"/>
+        <Button x:Name="ShowAreaButton" Content="Area" HorizontalAlignment="Left" Margin="923,633,0,0" VerticalAlignment="Top" Width="75" Click="ShowAreaButton_Click"/>
+        <Button x:Name="AhowPerimeterButton" Content="Perimeter" HorizontalAlignment="Left" Margin="923,660,0,0" VerticalAlignment="Top" Width="75" Click="AhowPerimeterButton_Click"/>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="1115,627,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_Click"/>
         <Button x:Name="LoadButton" Content="Load" HorizontalAlignment="Left" Margin="1115,654,0,0" VerticalAlignment="Top" Width="74" Click="LoadButton_Click"/>
+        <Button x:Name="button" Content="PERIMETER" HorizontalAlignment="Left" Margin="923,687,0,0" VerticalAlignment="Top" Width="129" Height="67" Click="button_Click_1"/>
 
 
 
