@@ -59,6 +59,10 @@ namespace WpfEditor1
                 ImagesListBox.Items.Add(im);
             }
 
+            RefreshImagesListBox();
+
+            
+
 
             string[] names = new string[]
             {
@@ -71,34 +75,117 @@ namespace WpfEditor1
             };
 
             FiguresComboBox.ItemsSource = names;
-
-            foreach (MyImage im in Images)
-            {
-                ImagesListBox.Items.Add(im);
-            }
-
-            myImage.Add(
-                new Circle()
-                {
-                    Id=0,
-                    Position = new Point3D(0, 0, 0),
-                    Radius = 2,
-                    LineWidth = 1,
-                    Resolution = 30,
-                    Color = Colors.Red,
-                });
             
-            myImage.Add(
-                new Circle()
-                {
-                    Id = 1,
-                    Position = new Point3D(0, 2, 0),
-                    Radius = 2,
-                    LineWidth = 1,
-                    Resolution = 30,
-                    Color = Colors.Red,
-                });
-                        
+
+
+            myImage.Add(new Circle()
+            {
+                Id = 11,
+                Position = new Point3D(-2, 0, 0),
+                Radius = 3,
+                Resolution = 30,
+                LineWidth = 0.05,
+                Color = Colors.Turquoise,
+            });
+
+            myImage.Add(new Circle()
+            {
+                Id = 12,
+                Position = new Point3D(2, 0, 0),
+                Radius = 3,
+                Resolution = 30,
+                LineWidth = 0.05,
+                Color = Colors.Turquoise,
+            });
+
+
+
+            /*
+            myImage.Add(new Models.Ellipse()
+            {
+                Id = 0,
+                Position = new Point3D(-2, 0, 0),
+                Resolution = 30,
+                A = 1,
+                B = 2,
+                Color = Colors.Red,
+            });
+
+            myImage.Add(new Models.Ellipse()
+            {
+                Id = 1,
+                Position = new Point3D(2, 0, 0),
+                Resolution = 30,
+                A = 1,
+                B = 2,
+                Color = Colors.Red,
+            });
+
+            myImage.Add(new Models.Ellipse()
+            {
+                Id = 2,
+                Position = new Point3D(0, 2, 0),
+                Resolution = 30,
+                A = 2,
+                B = 1,
+                Color = Colors.Red,
+            });
+
+            myImage.Add(new Models.Ellipse()
+            {
+                Id = 3,
+                Position = new Point3D(0, -2, 0),
+                Resolution = 30,
+                A = 2,
+                B = 1,
+                Color = Colors.Red,
+            });
+
+            myImage.Add(new Cone()
+            {
+                Id = 10,
+                Position = new Point3D(0, -5, -3),
+                Radius = 3,
+                Height = 6,
+                Resolution = 30,
+                Color = Colors.Fuchsia,
+            });
+
+            
+            myImage.Add(new Circle()
+            {
+                Id = 11,
+                Position = new Point3D(-3, -4, -3),
+                Radius = 2,
+                Resolution = 30,
+                LineWidth = 0.05,
+                Color = Colors.Turquoise,
+            });
+
+            myImage.Add(new Circle()
+            {
+                Id = 12,
+                Position = new Point3D(3, -4,-3),
+                Radius = 2,
+                Resolution = 30,
+                LineWidth = 0.05,
+                Color = Colors.Turquoise,
+            });
+
+
+            myImage.Add(new CuttedCone()
+            {
+                Id = 4,
+                Position = new Point3D(0, -6, -15),
+                Radius = 10,
+                SmallRadius = 8,
+                Height = 10,
+                Resolution = 50,
+                Color = Colors.Gainsboro,
+            });
+            
+
+            /*
             myImage.Add(new EmptyCircle()
             {
                 Id = 1,
@@ -108,7 +195,7 @@ namespace WpfEditor1
                 LineWidth = 0.05,
                 Color = Colors.Red,
             });
-            
+
             myImage.Add(new Models.Ellipse()
             {
                 Id = 2,
@@ -127,7 +214,7 @@ namespace WpfEditor1
                 Resolution = 30,
                 Color = Colors.Red,
             });
-            
+
             myImage.Add(new CuttedCone()
             {
                 Id = 4,
@@ -138,7 +225,8 @@ namespace WpfEditor1
                 Resolution = 50,
                 Color = Colors.Red,
             });            
-            
+            */
+
 
 
             RefreshFiguresView();
@@ -459,10 +547,15 @@ namespace WpfEditor1
 
         private void ImagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(ImagesListBox.SelectedIndex == -1)
+            if(ImagesListBox.SelectedIndex == -1 || ImagesListBox.SelectedItems.Count > 1)
             {
                 return;
             }
+
+            this.myImage = (MyImage)ImagesListBox.SelectedItem;
+
+            RefreshFiguresView();
+            myImage.RedrawAll();
 
 
         }
@@ -495,14 +588,20 @@ namespace WpfEditor1
             dlg.Filter = "Json (.txt)|*.txt";
 
             bool? result = dlg.ShowDialog();
-            
+
 
             if (result == true)
             {
                 string filename = dlg.FileName;
-                myImage.Load(filename);
+                MyImage newImg = new MyImage(this.MainViewPort);
+                newImg.Name = filename.Split('\\').Last();
+                newImg.Load(filename);
+                Images.Add(newImg);
+
+                //this.myImage = newImg;
+
             }
-            
+            RefreshImagesListBox();
             RefreshFiguresView();
         }
 
@@ -522,8 +621,57 @@ namespace WpfEditor1
                 string filename = dlg.FileName;
                 myImage.Save(filename);
             }
+        }
+
+        private void JoinButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(ImagesListBox.SelectedItems.Count != 2)
+            {
+                return;
+            }
+
+            MyImage fst = (MyImage)ImagesListBox.SelectedItems[0];
+            MyImage snd = (MyImage)ImagesListBox.SelectedItems[1];
+
+            foreach(Models.Figure fig in snd.Figures)
+            {
+                fst.Add(fig);
+            }
+
+            Images.Remove(snd);
+            
+            myImage.RedrawAll();
+            RefreshFiguresView();
+            RefreshImagesListBox();
+            
+
             
         }
+
+
+
+        public void RefreshImagesListBox()
+        {
+            ImagesListBox.Items.Clear();
+
+            foreach (MyImage img in Images)
+            {
+                ImagesListBox.Items.Add(img);
+            }
+
+            RefreshFiguresView();
+        }
+
+
+        private void ClearPointsButtonClick(object sender, RoutedEventArgs e)
+        {
+            myImage.Figures = myImage.Figures
+                        .Where(f => f.Id != -9)
+                        .ToList();
+            myImage.RedrawAll();
+            RefreshFiguresView();
+        }
+        
 
 
 
@@ -531,48 +679,31 @@ namespace WpfEditor1
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
-            List<Models.Point> newPoints = new List<Models.Point>();
-            double dl = 0.2;
+            double dl = 0.02;
+            ClearPointsButtonClick(null, null);
+
+            try
+            {
+                dl = double.Parse(dlInputTextBox.Text);
+            }
+            catch { }
+
+            List<Models.Point> newPoints = new List<Models.Point>();            
             double psize = 0.05;
 
+            double perimeter = myImage.TotalPerimeter(dl, psize, (bool)verboseTotalPerimeterCheckBox.IsChecked);
+
             /*
-            //////////////////////////
-
-        
-            Point3D A = new Point3D(-1, -1, 0);
-            Point3D B = new Point3D(1, 1, 0);
-
-            foreach (Point3D p in Models.Figure.PointsOnLine(B, A, 0.1))
-            {
-                myImage.Add(new Models.Point()
-                {
-                    Id = -9,
-                    Radius = psize,
-                    Color = Colors.Magenta,
-                    Position = p
-                });
-            }
-
-            ///////////////
-            */
-
-
-            
             foreach (Models.Figure myfig in myImage.Figures)
             {
-                
-
                 foreach (Point3D p in myfig.DropPointsOnPerimeter(dl))
                 {
-                    
-                    int hitCounter = 0;
-
                     Models.Point newPoint = new Models.Point()
                     {
                         Id = -9,
                         Radius = psize,
                         Color = Colors.Green,
-                        Position = new Point3D(p.X, p.Y, 1),
+                        Position = new Point3D(p.X, p.Y, 0.01),
                     };
 
                     foreach (Models.Figure fig in myImage.Figures)
@@ -581,25 +712,60 @@ namespace WpfEditor1
                         {
                             if (fig.Hitted(newPoint))
                             {
-                                hitCounter++;
+                                newPoint.Color = Colors.Orange;
                             }
-                        }
-                        
+                        }                        
                     }
 
-                    if (hitCounter >= 1)
-                    {
-                        newPoint.Color = Colors.Orange;
-                    }
-
-
+                    //if(newPoint.Color != Colors.Orange)
                     newPoints.Add(newPoint);
                 }
             }
 
             myImage.Figures.AddRange(newPoints);  
+            */
+
             myImage.RedrawAll();
-            MessageBox.Show((newPoints.Where(p => p.Color == Colors.Green).Count()*dl).ToString());
+            MessageBox.Show(perimeter.ToString());
+        }
+
+        private void ScaleSelectedButton_Click(object sender, RoutedEventArgs e)
+        {
+            double size;
+
+            if (FiguresListBox.SelectedIndex == -1)
+            {
+                return;
+            }            
+
+            double.TryParse(ScaleTextBox.Text, out size);
+
+            if (size == 0)
+            {
+                return;
+            }
+
+            ((Models.Figure)FiguresListBox.SelectedItem).Scale(size);
+
+            myImage.RedrawAll();
+        }
+
+
+
+
+        private void ScaleImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            double size;
+
+            double.TryParse(ScaleTextBox.Text, out size);
+
+            if(size == 0)
+            {
+                return;
+            }
+
+            myImage.Rescale(size);
+            myImage.RedrawAll();
         }
     }
 

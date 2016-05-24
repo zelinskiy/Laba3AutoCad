@@ -13,6 +13,8 @@ namespace WpfEditor1.Models
 {
     public class MyImage
     {
+        public string Name = "Image";
+
         public Random rand = new Random();
 
 
@@ -312,6 +314,75 @@ namespace WpfEditor1.Models
                     Figures = figs;                    
                     RedrawAll();
                 }
+            }
+        }
+
+
+
+
+
+        public double TotalPerimeter(double dl, double psize, bool show)
+        {
+            
+
+            List<Models.Point> newPoints = new List<Models.Point>();
+
+
+            foreach (Models.Figure myfig in Figures)
+            {
+                foreach (Point3D p in myfig.DropPointsOnPerimeter(dl))
+                {
+                    Models.Point newPoint = new Models.Point()
+                    {
+                        Id = -9,
+                        Radius = psize,
+                        Color = Colors.Green,
+                        Position = new Point3D(p.X, p.Y, 0.01),
+                    };
+
+                    foreach (Models.Figure fig in Figures)
+                    {
+                        if (fig != myfig)
+                        {
+                            if (fig.Hitted(newPoint))
+                            {
+                                newPoint.Color = Colors.Orange;
+                            }
+                        }
+                    }
+
+                    newPoints.Add(newPoint);
+                }
+            }
+            if(show)
+                Figures.AddRange(newPoints);
+
+            return newPoints.Where(p => p.Color == Colors.Green).Count() * dl;
+
+
+        }
+
+
+
+
+
+
+        public void Rescale(double size)
+        {
+            if(size <= 0)
+            {
+                return;
+            }
+
+            foreach(Figure fig in Figures)
+            {
+                fig.Scale(size);
+
+                fig.Position = new Point3D(
+                        fig.Position.X * size,
+                        fig.Position.Y * size,
+                        fig.Position.Z * size
+                    );
             }
         }
 

@@ -17,10 +17,11 @@ namespace WpfEditor1.Models
         public override bool Hitted(Point p)
         {
             double x = p.Position.X;
-            double x0 = Position.Y;
+            double x0 = Position.X;
             double y = p.Position.Y;
             double y0 = Position.Y;
-            return Math.Pow((x - x0) / A, 2) + Math.Pow((y - y0) / B, 2) <= 1;
+            return Math.Pow(x - x0, 2) / Math.Pow(A, 2) 
+                + Math.Pow(y - y0, 2) / Math.Pow(B, 2) < 0.99;
         }
 
 

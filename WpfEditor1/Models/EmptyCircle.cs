@@ -13,7 +13,10 @@ namespace WpfEditor1.Models
         public int Resolution { get; set; }
         public double LineWidth { get; set; }
 
-        public override void Scale(double size) { }
+        public override void Scale(double size)
+        {
+            Radius *= size;
+        }
 
 
 

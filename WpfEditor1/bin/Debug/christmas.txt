@@ -1,0 +1,6 @@
+%%%WpfEditor1.Models.CuttedCone
+{"SmallRadius":0.3,"Height":0.3,"Id":5933,"Resolution":30,"LineWidth":0.0,"Name":"CuttedCone","Position":"0,0,0","Radius":0.3,"Color":"#FFF1EF1D"}
+%%%WpfEditor1.Models.Cone
+{"Height":2.0,"Id":83677,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"0,0.2,0","Radius":1.0,"Color":"#FF4BF713"}
+{"Height":1.5,"Id":99530,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"0,1.3,0","Radius":0.8,"Color":"#FF4BF713"}
+{"Height":1.0,"Id":79087,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"0,2,0","Radius":0.7,"Color":"#FF4BF713"}

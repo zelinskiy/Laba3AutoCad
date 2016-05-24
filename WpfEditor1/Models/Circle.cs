@@ -10,8 +10,7 @@ namespace WpfEditor1.Models
     public class Circle:EmptyCircle
     {
         
-
-        public override void Scale(double size) { }
+        
 
 
 

@@ -12,7 +12,12 @@ namespace WpfEditor1.Models
 
         public double SmallRadius;
 
-        public override void Scale(double size) { }
+        public override void Scale(double size)
+        {
+            this.Radius *= size;
+            Height *= size;
+            SmallRadius *= size;
+        }
 
 
 

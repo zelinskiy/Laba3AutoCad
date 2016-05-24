@@ -1,0 +1,12 @@
+%%%WpfEditor1.Models.Circle
+{"Id":11423,"Resolution":30,"LineWidth":1.0,"Name":"Circle","Position":"0,0,0","Radius":2.0,"Color":"#FFFF0000"}
+{"Id":20285,"Resolution":30,"LineWidth":1.0,"Name":"Circle","Position":"0,2,0","Radius":2.0,"Color":"#FFFF0000"}
+%%%WpfEditor1.Models.EmptyCircle
+{"Id":7383,"Resolution":30,"LineWidth":0.05,"Name":"EmptyCircle","Position":"5,0,0","Radius":2.0,"Color":"#FFFF0000"}
+%%%WpfEditor1.Models.Ellipse
+{"A":1.0,"B":2.0,"Id":73869,"Resolution":30,"LineWidth":0.0,"Name":"Ellipse","Position":"10,0,0","Radius":0.0,"Color":"#FFFF0000"}
+{"A":1.0,"B":3.0,"Id":62910,"Resolution":30,"LineWidth":0.0,"Name":"Ellipse","Position":"0,-4,1","Radius":2.0,"Color":"#FFF1EF1D"}
+%%%WpfEditor1.Models.Cone
+{"Height":6.0,"Id":59406,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"-5,0,0","Radius":3.0,"Color":"#FFFF0000"}
+%%%WpfEditor1.Models.CuttedCone
+{"SmallRadius":0.5,"Height":5.0,"Id":55832,"Resolution":50,"LineWidth":0.0,"Name":"CuttedCone","Position":"-10,0,0","Radius":3.0,"Color":"#FFFF0000"}
