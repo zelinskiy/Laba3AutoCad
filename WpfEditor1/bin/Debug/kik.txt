@@ -1,0 +1,3 @@
+%%%WpfEditor1.Models.Circle
+{"Id":10360,"Resolution":30,"LineWidth":0.05,"Name":"Circle","Position":"-2,0,0","Radius":3.0,"Color":"#FF40E0D0"}
+{"Id":64472,"Resolution":30,"LineWidth":0.05,"Name":"Circle","Position":"2,0,0","Radius":3.0,"Color":"#FF40E0D0"}

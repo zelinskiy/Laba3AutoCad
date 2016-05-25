@@ -12,7 +12,11 @@ namespace WpfEditor1.Models
 
         public double A, B;
 
-        public override void Scale(double size) { }
+        public override void Scale(double size)
+        {
+            A *= size;
+            B *= size;
+        }
 
         public override bool Hitted(Point p)
         {

@@ -1,0 +1,14 @@
+%%%WpfEditor1.Models.CuttedCone
+{"SmallRadius":0.3,"Height":0.3,"Id":5933,"Resolution":30,"LineWidth":0.0,"Name":"CuttedCone","Position":"1.87917637917641,-0.0294483294482593,-1.06581410364015E-14","Radius":0.3,"Color":"#FFF1EF1D"}
+{"SmallRadius":0.3,"Height":0.3,"Id":80359,"Resolution":30,"LineWidth":0.0,"Name":"CuttedCone","Position":"-1.9317793317793,-0.0294483294482593,-1.06581410364015E-14","Radius":0.3,"Color":"#FFF1EF1D"}
+{"SmallRadius":0.3,"Height":0.3,"Id":52807,"Resolution":30,"LineWidth":0.0,"Name":"CuttedCone","Position":"0.00520590520592965,-0.0294483294482593,-1.06581410364015E-14","Radius":0.3,"Color":"#FFF1EF1D"}
+%%%WpfEditor1.Models.Cone
+{"Height":2.0,"Id":83677,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"1.87917637917641,0.17055167055174,-1.06581410364015E-14","Radius":1.0,"Color":"#FF4BF713"}
+{"Height":1.5,"Id":99530,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"1.87917637917641,1.27055167055174,-1.06581410364015E-14","Radius":0.8,"Color":"#FF4BF713"}
+{"Height":1.0,"Id":79087,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"1.87917637917641,1.97055167055173,-1.06581410364015E-14","Radius":0.7,"Color":"#FF4BF713"}
+{"Height":2.0,"Id":41791,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"-1.9317793317793,0.17055167055174,-1.06581410364015E-14","Radius":1.0,"Color":"#FF4BF713"}
+{"Height":1.5,"Id":6779,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"-1.9317793317793,1.27055167055174,-1.06581410364015E-14","Radius":0.8,"Color":"#FF4BF713"}
+{"Height":1.0,"Id":90117,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"-1.9317793317793,1.97055167055173,-1.06581410364015E-14","Radius":0.7,"Color":"#FF4BF713"}
+{"Height":2.0,"Id":81028,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"0.00520590520592965,0.17055167055174,-1.06581410364015E-14","Radius":1.0,"Color":"#FF4BF713"}
+{"Height":1.5,"Id":49948,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"0.00520590520592965,1.27055167055174,-1.06581410364015E-14","Radius":0.8,"Color":"#FF4BF713"}
+{"Height":1.0,"Id":8515,"Resolution":30,"LineWidth":0.0,"Name":"Cone","Position":"0.00520590520592965,1.97055167055173,-1.06581410364015E-14","Radius":0.7,"Color":"#FF4BF713"}

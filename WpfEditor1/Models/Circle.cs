@@ -20,8 +20,14 @@ namespace WpfEditor1.Models
             for (int i = 0; i < Resolution; i++)
             {
                 image.DrawTriangle(
-                    new Point3D(Position.X + Radius * Math.Cos(t * i), Position.Y - Radius * Math.Sin(t * i), Position.Z),
-                    new Point3D(Position.X + Radius * Math.Cos(t * (i + 1)), Position.Y - Radius * Math.Sin(t * (i + 1)), Position.Z),
+                    new Point3D(
+                        Position.X + Radius * Math.Cos(t * i),
+                        Position.Y - Radius * Math.Sin(t * i),
+                        Position.Z),
+
+                    new Point3D(Position.X + Radius * Math.Cos(t * (i + 1)),
+                    Position.Y - Radius * Math.Sin(t * (i + 1)),
+                    Position.Z),
                     Position,
                     Color.ToString()
                 );

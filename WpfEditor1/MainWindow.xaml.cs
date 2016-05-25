@@ -598,9 +598,11 @@ namespace WpfEditor1
                 newImg.Load(filename);
                 Images.Add(newImg);
 
-                //this.myImage = newImg;
+                this.myImage = newImg;
 
             }
+
+            myImage.RedrawAll();
             RefreshImagesListBox();
             RefreshFiguresView();
         }
@@ -680,6 +682,8 @@ namespace WpfEditor1
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
             double dl = 0.02;
+            double psize = 0.05;
+
             ClearPointsButtonClick(null, null);
 
             try
@@ -687,43 +691,11 @@ namespace WpfEditor1
                 dl = double.Parse(dlInputTextBox.Text);
             }
             catch { }
-
-            List<Models.Point> newPoints = new List<Models.Point>();            
-            double psize = 0.05;
+           
+            
 
             double perimeter = myImage.TotalPerimeter(dl, psize, (bool)verboseTotalPerimeterCheckBox.IsChecked);
-
-            /*
-            foreach (Models.Figure myfig in myImage.Figures)
-            {
-                foreach (Point3D p in myfig.DropPointsOnPerimeter(dl))
-                {
-                    Models.Point newPoint = new Models.Point()
-                    {
-                        Id = -9,
-                        Radius = psize,
-                        Color = Colors.Green,
-                        Position = new Point3D(p.X, p.Y, 0.01),
-                    };
-
-                    foreach (Models.Figure fig in myImage.Figures)
-                    {
-                        if(fig != myfig)
-                        {
-                            if (fig.Hitted(newPoint))
-                            {
-                                newPoint.Color = Colors.Orange;
-                            }
-                        }                        
-                    }
-
-                    //if(newPoint.Color != Colors.Orange)
-                    newPoints.Add(newPoint);
-                }
-            }
-
-            myImage.Figures.AddRange(newPoints);  
-            */
+            
 
             myImage.RedrawAll();
             MessageBox.Show(perimeter.ToString());
@@ -767,6 +739,22 @@ namespace WpfEditor1
             myImage.Rescale(size);
             myImage.RedrawAll();
         }
+
+        private void MoveImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            MoveImage(((Button)sender).Content.ToString());
+            myImage.RedrawAll();
+            RefreshFiguresView();
+        }
+        
+
+
+        private void MoveImage(string dir)
+        {
+            myImage.Move(MoveImageSpeedSlider.Value, dir);
+        }
+
+
     }
 
 }

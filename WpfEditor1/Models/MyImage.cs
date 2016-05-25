@@ -234,7 +234,8 @@ namespace WpfEditor1.Models
 
         public override string ToString()
         {
-            return $"Image from ({Begin}) to ({End})";
+            return Name;
+            //return $"Image from ({Begin}) to ({End})";
         }
 
 
@@ -311,8 +312,7 @@ namespace WpfEditor1.Models
                             }
                         }
                     }
-                    Figures = figs;                    
-                    RedrawAll();
+                    Figures = figs;
                 }
             }
         }
@@ -384,6 +384,48 @@ namespace WpfEditor1.Models
                         fig.Position.Z * size
                     );
             }
+        }
+
+
+        public void MoveAllFigures(double dX, double dY, double dZ)
+        {
+            foreach(Figure fig in Figures)
+            {
+                fig.Position = new Point3D
+                    (                
+                        fig.Position.X + dX,
+                        fig.Position.Y + dY,
+                        fig.Position.Z + dZ
+                    );
+            }
+        }
+
+
+        public void Move(double len, string dir)
+        {
+            switch (dir)
+            {
+                case "U":
+                    MoveAllFigures(0, len, 0);
+                    break;
+                case "D":
+                    MoveAllFigures(0, -len, 0);
+                    break;
+                case "L":
+                    MoveAllFigures(-len, 0, 0);
+                    break;
+                case "R":
+                    MoveAllFigures(len, 0, 0);
+                    break;
+                case "F":
+                    MoveAllFigures(0, 0, -len);
+                    break;
+                case "B":
+                    MoveAllFigures(0, 0, len);
+                    break;
+
+            }
+
         }
 
 

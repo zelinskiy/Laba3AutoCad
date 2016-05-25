@@ -17,7 +17,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Viewport3D x:Name="MainViewPort" Margin="0,0,460.6,0.2">
+        <Viewport3D x:Name="MainViewPort" Margin="0,0,469.6,0.2">
 
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="MainCamera" Position="0,0,10" LookDirection="0,0,-2" />
@@ -99,6 +99,9 @@
                     <Color>#FF4BF713</Color>
                     <Color>#FF114BFD</Color>
                     <Color>#FFF1EF1D</Color>
+                    <Color>Green</Color>
+                    <Color>Magenta</Color>
+                    <Color>Cyan</Color>
                 </ComboBox>
 
 
@@ -139,6 +142,25 @@
                 <TextBox x:Name="ScaleTextBox" HorizontalAlignment="Left" Height="23" Margin="246,531,0,0" Text="1,2" VerticalAlignment="Top" Width="33" MaxLines="1"/>
                 <Button x:Name="ScaleSelectedButton" Content="Figure" HorizontalAlignment="Left" Margin="284,531,0,0" VerticalAlignment="Top" Width="51" Click="ScaleSelectedButton_Click" />
                 <Button x:Name="ScaleImageButton" Content="Image" HorizontalAlignment="Left" Margin="340,531,0,0" VerticalAlignment="Top" Width="51" Click="ScaleImageButton_Click"/>
+
+
+
+                <Button x:Name="MoveImageLeftButton" Content="L" HorizontalAlignment="Left" Margin="339,572,0,0" VerticalAlignment="Top" Width="20" Click="MoveImageButton_Click"/>
+                <Button x:Name="MoveImageRightButton" Content="R" HorizontalAlignment="Left" Margin="364,572,0,0" VerticalAlignment="Top" Width="20" Click="MoveImageButton_Click"/>
+                <Button x:Name="MoveImageDownButton" Content="D" HorizontalAlignment="Left" Margin="314,572,0,0" VerticalAlignment="Top" Width="20" Click="MoveImageButton_Click"/>
+                <Button x:Name="MoveImageUpButton" Content="U" HorizontalAlignment="Left" Margin="289,572,0,0" VerticalAlignment="Top" Width="20" Click="MoveImageButton_Click"/>
+                <Button x:Name="MoveImageForwardButton" Content="F" HorizontalAlignment="Left" Margin="389,573,0,0" VerticalAlignment="Top" Width="20" Click="MoveImageButton_Click"/>
+                <Button x:Name="MoveImageBackwardButton" Content="B" HorizontalAlignment="Left" Margin="414,572,0,0" VerticalAlignment="Top" Width="20" Click="MoveImageButton_Click"/>
+                <Slider x:Name="MoveImageSpeedSlider" HorizontalAlignment="Left" Margin="350,544,0,0" VerticalAlignment="Top" Width="22" RenderTransformOrigin="0.5,0.5" LargeChange="0" TickFrequency="2" ValueChanged="C12SpeedSlider_ValueChanged" Height="128" Orientation="Vertical" Maximum="20" IsDirectionReversed="True" Minimum="0.1" Value="0.1">
+                    <Slider.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="1.1" ScaleX="0.909"/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Slider.RenderTransform>
+                </Slider>
 
 
 
