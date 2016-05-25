@@ -66,7 +66,7 @@
 
 
 
-                <Slider x:Name="C12SpeedSlider" HorizontalAlignment="Left" Margin="117,147,0,0" VerticalAlignment="Top" Width="108" RenderTransformOrigin="0.5,0.5" LargeChange="0" Minimum="0.05" SmallChange="0.05" TickFrequency="2" ValueChanged="C12SpeedSlider_ValueChanged" Height="20">
+                <Slider x:Name="C12SpeedSlider" HorizontalAlignment="Left" Margin="84,146,0,0" VerticalAlignment="Top" Width="174" RenderTransformOrigin="0.5,0.5" LargeChange="0" Minimum="0.05" SmallChange="0.05" TickFrequency="2" ValueChanged="C12SpeedSlider_ValueChanged" Height="20">
                     <Slider.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleY="1.1" ScaleX="0.909"/>
